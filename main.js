@@ -117,10 +117,11 @@ if (DetermineIsNull(Input_VariableLists) == false) {
 		})
 	);
 };
-const Output = Input_VariableLists;
-Output["value1"] = Input_CanVariable["value1"];
-Output["value2"] = Input_CanVariable["value2"];
-Output["value3"] = Input_CanVariable["value3"];
+const Output = {
+	"value1": Input_CanVariable["value1"],
+	"value2": Input_CanVariable["value2"],
+	"value3": Input_CanVariable["value3"]
+};
 
 /*::::::::
 Send
