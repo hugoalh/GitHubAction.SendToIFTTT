@@ -11,7 +11,7 @@ jobs:
     - "fetch-payload-data"
     steps:
     - id: "send-to-ifttt-main"
-      uses: "hugoalh/GitHubAction.SendToIFTTT@v1.0.2"
+      uses: "hugoalh/GitHubAction.SendToIFTTT@v1.1.0"
       with:
         webhook_eventname: "say_hello"
         webhook_key: "${{secrets.IFTTT_WEBHOOK_KEY}}"

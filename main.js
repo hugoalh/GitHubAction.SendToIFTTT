@@ -3,37 +3,37 @@
 	Author & Contributor:
 		hugoalh
 	Language:
-		NodeJS 12
+		NodeJS 14
 ==================*/
 /*::::::::
 Import Module
 ::::::::*/
-const NodeJS = {
-	HTTPS: require("https")
+const nodeJS = {
+	https: require("https")
 };
-const GitHubAction = {
-	Core: require("@actions/core")
+const githubAction = {
+	core: require("@actions/core")
 };
-const JSONFlatten = require("flat").flatten;
+const jsonFlatten = require("flat").flatten;
 
 /*::::::::
 Data Handle
 ::::::::*/
-function DetermineIsNull(Input) {
-	if (Input == null ||
-		Input == "null" ||
-		Input == "" ||
-		Input == [] ||
-		Input == {} ||
-		Input == "{}" ||
-		Input == undefined ||
-		Input == "undefined"
+function determineIsNull(input) {
+	if (input === null ||
+		input === "null" ||
+		input === "" ||
+		input === [] ||
+		input === {} ||
+		input === "{}" ||
+		input === undefined ||
+		input === "undefined"
 	) {
 		return true;
 	};
 	return false;
 };
-const Input_CannotVariable = {};
+const inputCannotVariable = {};
 [
 	"webhook_eventname",
 	"webhook_key",
@@ -41,75 +41,75 @@ const Input_CannotVariable = {};
 	"variable_suffix",
 	"variable_join"
 ].forEach((value, index) => {
-	Input_CannotVariable[value] = GitHubAction.Core.getInput(value);
+	inputCannotVariable[value] = githubAction.core.getInput(value);
 });
-const Input_CanVariable = {};
+const inputCanVariable = {};
 [
 	"value1",
 	"value2",
 	"value3"
 ].forEach((value, index) => {
-	Input_CanVariable[value] = GitHubAction.Core.getInput(value);
+	inputCanVariable[value] = githubAction.core.getInput(value);
 });
-if (DetermineIsNull(Input_CannotVariable["webhook_eventname"]) == false && DetermineIsNull(Input_CannotVariable["webhook_key"]) == false) {
-	Input_CannotVariable["webhook_url"] = `https://maker.ifttt.com/trigger/${Input_CannotVariable["webhook_eventname"]}/with/key/${Input_CannotVariable["webhook_key"]}`;
+if (determineIsNull(inputCannotVariable["webhook_eventname"]) == false && determineIsNull(inputCannotVariable["webhook_key"]) == false) {
+	inputCannotVariable["webhook_url"] = `https://maker.ifttt.com/trigger/${inputCannotVariable["webhook_eventname"]}/with/key/${inputCannotVariable["webhook_key"]}`;
 } else {
-	GitHubAction.Core.setFailed("Invalid webhook event name or key!");
+	githubAction.core.setFailed("Invalid webhook event name or key!");
 };
-var Input_VariableLists = {};
+let inputVariableLists = {};
 for (let index = 0; index < 10; index++) {
-	let Name = GitHubAction.Core.getInput(`variable_list_${index}_name`),
-		Data = GitHubAction.Core.getInput(`variable_list_${index}_data`);
-	if (DetermineIsNull(Data) == false) {
+	let name = githubAction.core.getInput(`variable_list_${index}_name`),
+		data = githubAction.core.getInput(`variable_list_${index}_data`);
+	if (determineIsNull(data) == false) {
 		try {
-			if (typeof Data != "object") {
-				Data = JSON.parse(Data);
+			if (typeof data != "object") {
+				data = JSON.parse(data);
 			};
 		} catch (error) {
-			GitHubAction.Core.setFailed(`Fail to parse variable list #${index}: ${error}`);
+			githubAction.core.setFailed(`Fail to parse variable list #${index}: ${error}`);
 		};
-		if (DetermineIsNull(Name) == false) {
-			Input_VariableLists[Name] = Data;
+		if (determineIsNull(name) == false) {
+			inputVariableLists[name] = data;
 		} else {
-			Input_VariableLists[index] = Data;
+			inputVariableLists[index] = data;
 		};
 	} else {
-		GitHubAction.Core.info(`Variable list #${index} is null, ignore remains.`);
+		githubAction.core.info(`Variable list #${index} is null, ignore remains.`);
 		break;
 	};
 };
-if (DetermineIsNull(Input_CannotVariable["variable_join"]) == true) {
-	Input_CannotVariable["variable_join"] = "_";
+if (determineIsNull(inputCannotVariable["variable_join"]) == true) {
+	inputCannotVariable["variable_join"] = "_";
 };
-if (DetermineIsNull(Input_CannotVariable["variable_prefix"]) == true) {
-	Input_CannotVariable["variable_prefix"] = "%";
+if (determineIsNull(inputCannotVariable["variable_prefix"]) == true) {
+	inputCannotVariable["variable_prefix"] = "%";
 };
-if (DetermineIsNull(Input_CannotVariable["variable_suffix"]) == true) {
-	Input_CannotVariable["variable_suffix"] = "%";
+if (determineIsNull(inputCannotVariable["variable_suffix"]) == true) {
+	inputCannotVariable["variable_suffix"] = "%";
 };
-if (DetermineIsNull(Input_VariableLists) == false) {
-	if (Object.keys(Input_VariableLists).length == 1) {
-		Input_VariableLists = Object.values(Input_VariableLists)[0];
+if (determineIsNull(inputVariableLists) == false) {
+	if (Object.keys(inputVariableLists).length == 1) {
+		inputVariableLists = Object.values(inputVariableLists)[0];
 	};
 	try {
-		Input_VariableLists = JSONFlatten(
-			Input_VariableLists,
+		inputVariableLists = jsonFlatten(
+			inputVariableLists,
 			{
-				delimiter: Input_CannotVariable["variable_join"],
+				delimiter: inputCannotVariable["variable_join"],
 				overwrite: true
 			}
 		);
 	} catch (error) {
-		GitHubAction.Core.setFailed(`Fail to flatten variable list: ${error}`);
+		githubAction.core.setFailed(`Fail to flatten variable list: ${error}`);
 	};
 	Promise.allSettled(
-		Object.keys(Input_CanVariable).map((Item, index) => {
+		Object.keys(inputCanVariable).map((item, index) => {
 			new Promise((resolve, reject) => {
-				if (DetermineIsNull(Item) == false) {
-					Object.keys(Input_VariableLists).forEach((Key, index) => {
-						Input_CanVariable[Item] = Input_CanVariable[Item].replace(
-							new RegExp(`${Input_CannotVariable["variable_prefix"]}${Key}${Input_CannotVariable["variable_suffix"]}`, "gu"),
-							Input_VariableLists[Key]
+				if (determineIsNull(item) == false) {
+					Object.keys(inputVariableLists).forEach((key, index) => {
+						inputCanVariable[item] = inputCanVariable[item].replace(
+							new RegExp(`${inputCannotVariable["variable_prefix"]}${key}${inputCannotVariable["variable_suffix"]}`, "gu"),
+							inputVariableLists[key]
 						);
 					});
 				};
@@ -117,27 +117,27 @@ if (DetermineIsNull(Input_VariableLists) == false) {
 		})
 	);
 };
-const Output = {
-	"value1": Input_CanVariable["value1"],
-	"value2": Input_CanVariable["value2"],
-	"value3": Input_CanVariable["value3"]
+const output = {
+	"value1": inputCanVariable["value1"],
+	"value2": inputCanVariable["value2"],
+	"value3": inputCanVariable["value3"]
 };
 
 /*::::::::
 Send
 ::::::::*/
-const Request_Payload = JSON.stringify(Output);
-const Request_Option = {
+const requestPayload = JSON.stringify(output);
+const requestOption = {
 	port: 443,
 	method: "POST",
 	headers: {
 		"Content-Type": "application/json",
-		"Content-Length": Request_Payload.length
+		"Content-Length": requestPayload.length
 	}
 };
-const Request_Node = NodeJS.HTTPS.request(
-	Input_CannotVariable["webhook_url"],
-	Request_Option,
+const requestNode = nodeJS.https.request(
+	inputCannotVariable["webhook_url"],
+	requestOption,
 	(result) => {
 		console.log(`Status Code: ${result.statusCode}`);
 		result.on(
@@ -148,11 +148,11 @@ const Request_Node = NodeJS.HTTPS.request(
 		);
 	}
 );
-Request_Node.on(
+requestNode.on(
 	"error",
 	(error) => {
-		GitHubAction.Core.setFailed(error);
+		githubAction.core.setFailed(error);
 	}
 );
-Request_Node.write(Request_Payload);
-Request_Node.end();
+requestNode.write(requestPayload);
+requestNode.end();
