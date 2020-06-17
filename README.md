@@ -10,34 +10,37 @@
   <img src="https://img.shields.io/github/forks/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github" />
 </div>
 
-<table>
+<table align="right">
   <tr>
     <td align="center">
-      <b>Author & Contributor</b><br />
+      <b>Contributor</b><br />
       <img src="https://img.shields.io/github/contributors/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" />
     </td>
     <td><a href="https://github.com/hugoalh">hugoalh</a></td>
   </tr>
   <tr>
     <td align="center"><b>License</b></td>
-    <td>MIT</td>
+    <td><a href="./LICENSE.md">MIT</a></td>
   </tr>
   <tr>
     <td align="center"><b>Release</b></td>
     <td>
-      <b>Stable: </b><img src="https://img.shields.io/github/release/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" /> (<img src="https://img.shields.io/github/release-date/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" />); <b>Latest: </b><img src="https://img.shields.io/github/release/hugoalh/GitHubAction.SendToIFTTT?include_prereleases&style=flat-square&color=000000&label=%20" /> (<img src="https://img.shields.io/github/release-date-pre/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" />)
+      <b>Stable: </b><img src="https://img.shields.io/github/release/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" /> (<img src="https://img.shields.io/github/release-date/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" />)<br />
+      <b>Latest: </b><img src="https://img.shields.io/github/release/hugoalh/GitHubAction.SendToIFTTT?include_prereleases&style=flat-square&color=000000&label=%20" /> (<img src="https://img.shields.io/github/release-date-pre/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" />)
     </td>
   </tr>
   <tr>
     <td align="center"><b>Issue</b></td>
     <td>
-      <b>Open: </b><img src="https://img.shields.io/github/issues-raw/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" />; <b>Closed: </b><img src="https://img.shields.io/github/issues-closed-raw/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" />
+      <b>Open: </b><img src="https://img.shields.io/github/issues-raw/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" /><br />
+      <b>Closed: </b><img src="https://img.shields.io/github/issues-closed-raw/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" />
     </td>
   </tr>
   <tr>
     <td align="center"><b>Pull Request</b></td>
     <td>
-      <b>Open: </b><img src="https://img.shields.io/github/issues-pr-raw/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" />; <b>Closed: </b><img src="https://img.shields.io/github/issues-pr-closed-raw/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" />
+      <b>Open: </b><img src="https://img.shields.io/github/issues-pr-raw/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" /><br />
+      <b>Closed: </b><img src="https://img.shields.io/github/issues-pr-closed-raw/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20" />
     </td>
   </tr>
 </table>
@@ -46,9 +49,11 @@
 
 Send data to IFTTT applet via webhook, support variables.
 
+## 🛠 Configuration
+
 ### 📥 Input
 
-#### Not support variable
+**Not support variable:**
 
 | **Key** | **Require? / Require Condition?** | <div align="center">**Type**</div> | <div align="center">**Description**</div> |
 |:---:|:---:|:----|:----|
@@ -60,11 +65,19 @@ Send data to IFTTT applet via webhook, support variables.
 | `variable_suffix` |  | String | Variable suffix. Default: `%`. |
 | `variable_join` |  | String | Variable join if having multiple variable lists, and/or variable list has depth. Default: `_`. |
 
-#### Support variable (& optional)
+**Support variable (& optional):**
 
-| **Key<br />(Require Condition?)** | <div align="center">**Type**</div> | <div align="center">**Description**</div> |
+| **Key** | <div align="center">**Type**</div> | <div align="center">**Description**</div> |
 |:---:|:----|:----|
 | `value1`<br />`value2`<br />`value3` | String | Default IFTTT ingredient namespace. |
+
+### 📤 Output
+
+*N/A*.
+
+### Example
+
+*See [workflow_example.yml](./workflow_example.yml)*.
 
 ### 📓 Guide
 
