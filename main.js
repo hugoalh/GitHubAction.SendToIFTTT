@@ -1,7 +1,5 @@
 /*==================
 [GitHub Action] Send To IFTTT
-	Contributor:
-		hugoalh
 	Language:
 		NodeJS 14
 ==================*/
@@ -14,26 +12,13 @@ const nodeJS = {
 const githubAction = {
 	core: require("@actions/core")
 };
+const customNullDetermine = require("./customnulldetermine.js");
 const jsonFlatten = require("flat").flatten;
 
 /*::::::::
 Data Handle
 ::::::::*/
-function determineIsNull(input) {
-	if (input === null ||
-		input === "null" ||
-		input === "" ||
-		input === [] ||
-		input === {} ||
-		input === "{}" ||
-		input === undefined ||
-		input === "undefined"
-	) {
-		return true;
-	};
-	return false;
-};
-const inputCannotVariable = {};
+let inputCannotVariable = {};
 [
 	"webhook_eventname",
 	"webhook_key",
@@ -43,7 +28,7 @@ const inputCannotVariable = {};
 ].forEach((value, index) => {
 	inputCannotVariable[value] = githubAction.core.getInput(value);
 });
-const inputCanVariable = {};
+let inputCanVariable = {};
 [
 	"value1",
 	"value2",
@@ -51,7 +36,7 @@ const inputCanVariable = {};
 ].forEach((value, index) => {
 	inputCanVariable[value] = githubAction.core.getInput(value);
 });
-if (determineIsNull(inputCannotVariable["webhook_eventname"]) == false && determineIsNull(inputCannotVariable["webhook_key"]) == false) {
+if (customNullDetermine(inputCannotVariable["webhook_eventname"]) == false && customNullDetermine(inputCannotVariable["webhook_key"]) == false) {
 	inputCannotVariable["webhook_url"] = `https://maker.ifttt.com/trigger/${inputCannotVariable["webhook_eventname"]}/with/key/${inputCannotVariable["webhook_key"]}`;
 } else {
 	githubAction.core.setFailed("Invalid webhook event name or key!");
@@ -60,7 +45,7 @@ let inputVariableLists = {};
 for (let index = 0; index < 10; index++) {
 	let name = githubAction.core.getInput(`variable_list_${index}_name`),
 		data = githubAction.core.getInput(`variable_list_${index}_data`);
-	if (determineIsNull(data) == false) {
+	if (customNullDetermine(data) == false) {
 		try {
 			if (typeof data != "object") {
 				data = JSON.parse(data);
@@ -68,7 +53,7 @@ for (let index = 0; index < 10; index++) {
 		} catch (error) {
 			githubAction.core.setFailed(`Fail to parse variable list #${index}: ${error}`);
 		};
-		if (determineIsNull(name) == false) {
+		if (customNullDetermine(name) == false) {
 			inputVariableLists[name] = data;
 		} else {
 			inputVariableLists[index] = data;
@@ -78,16 +63,16 @@ for (let index = 0; index < 10; index++) {
 		break;
 	};
 };
-if (determineIsNull(inputCannotVariable["variable_join"]) == true) {
+if (customNullDetermine(inputCannotVariable["variable_join"]) == true) {
 	inputCannotVariable["variable_join"] = "_";
 };
-if (determineIsNull(inputCannotVariable["variable_prefix"]) == true) {
+if (customNullDetermine(inputCannotVariable["variable_prefix"]) == true) {
 	inputCannotVariable["variable_prefix"] = "%";
 };
-if (determineIsNull(inputCannotVariable["variable_suffix"]) == true) {
+if (customNullDetermine(inputCannotVariable["variable_suffix"]) == true) {
 	inputCannotVariable["variable_suffix"] = "%";
 };
-if (determineIsNull(inputVariableLists) == false) {
+if (customNullDetermine(inputVariableLists) == false) {
 	if (Object.keys(inputVariableLists).length == 1) {
 		inputVariableLists = Object.values(inputVariableLists)[0];
 	};
@@ -105,7 +90,7 @@ if (determineIsNull(inputVariableLists) == false) {
 	Promise.allSettled(
 		Object.keys(inputCanVariable).map((item, index) => {
 			new Promise((resolve, reject) => {
-				if (determineIsNull(item) == false) {
+				if (customNullDetermine(item) == false) {
 					Object.keys(inputVariableLists).forEach((key, index) => {
 						inputCanVariable[item] = inputCanVariable[item].replace(
 							new RegExp(`${inputCannotVariable["variable_prefix"]}${key}${inputCannotVariable["variable_suffix"]}`, "gu"),
