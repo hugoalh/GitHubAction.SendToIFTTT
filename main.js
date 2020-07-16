@@ -102,7 +102,7 @@ const requestOption = {
 	}
 };
 const requestNode = https.request(
-	inputCannotVariable["webhook_url"],
+	inputCannotVariable.webhookUrl,
 	requestOption,
 	(result) => {
 		console.log(`Status Code: ${result.statusCode}`);
