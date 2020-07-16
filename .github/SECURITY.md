@@ -4,17 +4,20 @@
 
 | **Version** | **Support** |
 |:----|:----|
-| v1.1.4 | ✔ |
-| v1.1.2 | ✔ |
-| v1.1.1 | ✔ |
-| v1.1.0 | ✔ |
-| < v1.1.0 | ❌ |
+| v1.1.5 | ✔ |
+| < v1.1.5 | ❌ |
+
+### Buggy
+
+Version(s) that listed in here were confirmed contains bug(s), and forever not supported (even if listed as a supported version).
+
+*(N/A)*
 
 ## Report Vulnerability
 
 ### Contact
 
-Send an email to anyone who listed here (click the link to obtain the email address).
+Send an email to anyone who listed in here (click the link to obtain the email address).
 
 - [hugoalh](https://github.com/hugoalh)
 

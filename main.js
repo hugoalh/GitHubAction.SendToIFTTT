@@ -3,43 +3,28 @@
 	Language:
 		NodeJS 14
 ==================*/
-/*::::::::
-Import Module
-::::::::*/
-const nodeJS = {
-	https: require("https")
-};
+const https = require("https");
 const githubAction = {
 	core: require("@actions/core")
 };
 const customNullDetermine = require("./customnulldetermine.js");
 const jsonFlatten = require("flat").flatten;
-
-/*::::::::
-Data Handle
-::::::::*/
-let inputCannotVariable = {};
-[
-	"webhook_eventname",
-	"webhook_key",
-	"variable_prefix",
-	"variable_suffix",
-	"variable_join"
-].forEach((value, index) => {
-	inputCannotVariable[value] = githubAction.core.getInput(value);
-});
-let inputCanVariable = {};
-[
-	"value1",
-	"value2",
-	"value3"
-].forEach((value, index) => {
-	inputCanVariable[value] = githubAction.core.getInput(value);
-});
-if (customNullDetermine(inputCannotVariable["webhook_eventname"]) == false && customNullDetermine(inputCannotVariable["webhook_key"]) == false) {
-	inputCannotVariable["webhook_url"] = `https://maker.ifttt.com/trigger/${inputCannotVariable["webhook_eventname"]}/with/key/${inputCannotVariable["webhook_key"]}`;
+let inputCannotVariable = {
+	webhookEventName: githubAction.core.getInput("webhook_eventname"),
+	webhookKey: githubAction.core.getInput("webhook_key"),
+	variablePrefix: githubAction.core.getInput("variable_prefix"),
+	variableSuffix: githubAction.core.getInput("variable_suffix"),
+	variableJoin: githubAction.core.getInput("variable_join")
+};
+let inputCanVariable = {
+	value1: githubAction.core.getInput("value1"),
+	value2: githubAction.core.getInput("value2"),
+	value3: githubAction.core.getInput("value3")
+};
+if (customNullDetermine(inputCannotVariable.webhookEventName) == false && customNullDetermine(inputCannotVariable.webhookKey) == false) {
+	inputCannotVariable.webhookUrl = `https://maker.ifttt.com/trigger/${inputCannotVariable.webhookEventName}/with/key/${inputCannotVariable.webhookKey}`;
 } else {
-	githubAction.core.setFailed("Invalid webhook event name or key!");
+	githubAction.core.setFailed(`Invalid type of "webhook_eventname" or "webhook_key"! Require type of string.`);
 };
 let inputVariableLists = {};
 for (let index = 0; index < 10; index++) {
@@ -63,14 +48,14 @@ for (let index = 0; index < 10; index++) {
 		break;
 	};
 };
-if (customNullDetermine(inputCannotVariable["variable_join"]) == true) {
-	inputCannotVariable["variable_join"] = "_";
+if (customNullDetermine(inputCannotVariable.variableJoin) == true) {
+	inputCannotVariable.variableJoin = "_";
 };
-if (customNullDetermine(inputCannotVariable["variable_prefix"]) == true) {
-	inputCannotVariable["variable_prefix"] = "%";
+if (customNullDetermine(inputCannotVariable.variablePrefix) == true) {
+	inputCannotVariable.variablePrefix = "%";
 };
-if (customNullDetermine(inputCannotVariable["variable_suffix"]) == true) {
-	inputCannotVariable["variable_suffix"] = "%";
+if (customNullDetermine(inputCannotVariable.variableSuffix) == true) {
+	inputCannotVariable.variableSuffix = "%";
 };
 if (customNullDetermine(inputVariableLists) == false) {
 	if (Object.keys(inputVariableLists).length == 1) {
@@ -80,7 +65,7 @@ if (customNullDetermine(inputVariableLists) == false) {
 		inputVariableLists = jsonFlatten(
 			inputVariableLists,
 			{
-				delimiter: inputCannotVariable["variable_join"],
+				delimiter: inputCannotVariable.variableJoin,
 				overwrite: true
 			}
 		);
@@ -93,7 +78,7 @@ if (customNullDetermine(inputVariableLists) == false) {
 				if (customNullDetermine(item) == false) {
 					Object.keys(inputVariableLists).forEach((key, index) => {
 						inputCanVariable[item] = inputCanVariable[item].replace(
-							new RegExp(`${inputCannotVariable["variable_prefix"]}${key}${inputCannotVariable["variable_suffix"]}`, "gu"),
+							new RegExp(`${inputCannotVariable.variablePrefix}${key}${inputCannotVariable.variableSuffix}`, "gu"),
 							inputVariableLists[key]
 						);
 					});
@@ -103,14 +88,10 @@ if (customNullDetermine(inputVariableLists) == false) {
 	);
 };
 const output = {
-	"value1": inputCanVariable["value1"],
-	"value2": inputCanVariable["value2"],
-	"value3": inputCanVariable["value3"]
+	"value1": inputCanVariable.value1,
+	"value2": inputCanVariable.value2,
+	"value3": inputCanVariable.value3
 };
-
-/*::::::::
-Send
-::::::::*/
 const requestPayload = JSON.stringify(output);
 const requestOption = {
 	port: 443,
@@ -120,7 +101,7 @@ const requestOption = {
 		"Content-Length": requestPayload.length
 	}
 };
-const requestNode = nodeJS.https.request(
+const requestNode = https.request(
 	inputCannotVariable["webhook_url"],
 	requestOption,
 	(result) => {
