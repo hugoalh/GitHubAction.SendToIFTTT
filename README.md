@@ -11,6 +11,7 @@
 ![](https://img.shields.io/github/watchers/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github)
 ![](https://img.shields.io/github/stars/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github)
 ![](https://img.shields.io/github/forks/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github)
+[![](https://www.codefactor.io/repository/github/hugoalh/githubaction.sendtoifttt/badge)](https://www.codefactor.io/repository/github/hugoalh/githubaction.sendtoifttt)
 [![](https://img.shields.io/lgtm/alerts/g/hugoalh/GitHubAction.SendToIFTTT.svg?style=flat-square&logo=lgtm&label=%20)](https://lgtm.com/projects/g/hugoalh/GitHubAction.SendToIFTTT/alerts)
 [![](https://img.shields.io/lgtm/grade/javascript/g/hugoalh/GitHubAction.SendToIFTTT.svg?style=flat-square&logo=lgtm)](https://lgtm.com/projects/g/hugoalh/GitHubAction.SendToIFTTT/context:javascript)
 
