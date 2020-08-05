@@ -10,7 +10,7 @@ function customDetermine(item) {
 		advancedDetermine.isNull(item, { allowStringify: true }) == false ||
 		item === {} ||
 		item === "{}" ||
-		advancedDetermine.isUndefined(item, { fuzzyMode: true }) == true
+		advancedDetermine.isUndefined(item, { allowStringify: true }) == true
 	) {
 		return true;
 	};
