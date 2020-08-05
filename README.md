@@ -86,18 +86,6 @@ jobs:
           # variable_list_2_data:
           # variable_list_3_name:
           # variable_list_3_data:
-          # variable_list_4_name:
-          # variable_list_4_data:
-          # variable_list_5_name:
-          # variable_list_5_data:
-          # variable_list_6_name:
-          # variable_list_6_data:
-          # variable_list_7_name:
-          # variable_list_7_data:
-          # variable_list_8_name:
-          # variable_list_8_data:
-          # variable_list_9_name:
-          # variable_list_9_data:
           variable_prefix: "%"
           variable_suffix: "%"
           variable_join: "."

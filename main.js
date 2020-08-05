@@ -27,7 +27,7 @@ if (customDetermine(inputCannotVariable.webhookEventName) == false && customDete
 	githubAction.core.setFailed(`Invalid type of "webhook_eventname" or "webhook_key"! Require type of string.`);
 };
 let inputVariableLists = {};
-for (let index = 0; index < 10; index++) {
+for (let index = 0; index < 4; index++) {
 	let name = githubAction.core.getInput(`variable_list_${index}_name`),
 		data = githubAction.core.getInput(`variable_list_${index}_data`);
 	if (customDetermine(data) == false) {
@@ -73,17 +73,17 @@ if (customDetermine(inputVariableLists) == false) {
 		githubAction.core.setFailed(`Fail to flatten variable list: ${error}`);
 	};
 	Promise.allSettled(
-		Object.keys(inputCanVariable).map((item, index) => {
-			new Promise((resolve, reject) => {
+		Object.keys(inputCanVariable).map((item) => {
+			new Promise(() => {
 				if (customDetermine(item) == false) {
-					Object.keys(inputVariableLists).forEach((key, index) => {
+					Object.keys(inputVariableLists).forEach((key) => {
 						inputCanVariable[item] = inputCanVariable[item].replace(
 							new RegExp(`${inputCannotVariable.variablePrefix}${key}${inputCannotVariable.variableSuffix}`, "gu"),
 							inputVariableLists[key]
 						);
 					});
 				};
-			}).catch((error) => { });
+			}).catch();
 		})
 	);
 };

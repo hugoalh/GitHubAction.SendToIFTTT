@@ -41,42 +41,6 @@ inputs:
   variable_list_3_data:
     description: "[Stringified JSON] Variable list that will use in the data."
     required: false
-  variable_list_4_name:
-    description: "[String] Namespace for this variable list."
-    required: false
-  variable_list_4_data:
-    description: "[Stringified JSON] Variable list that will use in the data."
-    required: false
-  variable_list_5_name:
-    description: "[String] Namespace for this variable list."
-    required: false
-  variable_list_5_data:
-    description: "[Stringified JSON] Variable list that will use in the data."
-    required: false
-  variable_list_6_name:
-    description: "[String] Namespace for this variable list."
-    required: false
-  variable_list_6_data:
-    description: "[Stringified JSON] Variable list that will use in the data."
-    required: false
-  variable_list_7_name:
-    description: "[String] Namespace for this variable list."
-    required: false
-  variable_list_7_data:
-    description: "[Stringified JSON] Variable list that will use in the data."
-    required: false
-  variable_list_8_name:
-    description: "[String] Namespace for this variable list."
-    required: false
-  variable_list_8_data:
-    description: "[Stringified JSON] Variable list that will use in the data."
-    required: false
-  variable_list_9_name:
-    description: "[String] Namespace for this variable list."
-    required: false
-  variable_list_9_data:
-    description: "[Stringified JSON] Variable list that will use in the data."
-    required: false
   variable_prefix:
     description: "[String] Variable prefix."
     required: false
