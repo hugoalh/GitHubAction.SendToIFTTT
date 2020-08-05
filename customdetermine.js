@@ -1,12 +1,13 @@
 /*==================
-[GitHub Action] Send To IFTTT - Custom Null Determine
+[GitHub Action] Send To IFTTT - Custom Determine
 	Language:
 		NodeJS 14
 ==================*/
 const advancedDetermine = require("@hugoalh/advanced-determine");
-function customNullDetermine(item) {
+function customDetermine(item) {
 	if (
-		advancedDetermine.isNull(item, { fuzzyMode: true }) == true ||
+		advancedDetermine.isString(item) == true ||
+		advancedDetermine.isNull(item, { allowStringify: true }) == false ||
 		item === {} ||
 		item === "{}" ||
 		advancedDetermine.isUndefined(item, { fuzzyMode: true }) == true
@@ -15,4 +16,4 @@ function customNullDetermine(item) {
 	};
 	return false;
 };
-module.exports = customNullDetermine;
+module.exports = customDetermine;

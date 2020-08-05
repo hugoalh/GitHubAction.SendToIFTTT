@@ -3,11 +3,11 @@
 	Language:
 		NodeJS 14
 ==================*/
-const https = require("https");
+const customDetermine = require("./customdetermine.js");
 const githubAction = {
 	core: require("@actions/core")
 };
-const customNullDetermine = require("./customnulldetermine.js");
+const https = require("https");
 const jsonFlatten = require("flat").flatten;
 let inputCannotVariable = {
 	webhookEventName: githubAction.core.getInput("webhook_eventname"),
@@ -21,7 +21,7 @@ let inputCanVariable = {
 	value2: githubAction.core.getInput("value2"),
 	value3: githubAction.core.getInput("value3")
 };
-if (customNullDetermine(inputCannotVariable.webhookEventName) == false && customNullDetermine(inputCannotVariable.webhookKey) == false) {
+if (customDetermine(inputCannotVariable.webhookEventName) == false && customDetermine(inputCannotVariable.webhookKey) == false) {
 	inputCannotVariable.webhookUrl = `https://maker.ifttt.com/trigger/${inputCannotVariable.webhookEventName}/with/key/${inputCannotVariable.webhookKey}`;
 } else {
 	githubAction.core.setFailed(`Invalid type of "webhook_eventname" or "webhook_key"! Require type of string.`);
@@ -30,7 +30,7 @@ let inputVariableLists = {};
 for (let index = 0; index < 10; index++) {
 	let name = githubAction.core.getInput(`variable_list_${index}_name`),
 		data = githubAction.core.getInput(`variable_list_${index}_data`);
-	if (customNullDetermine(data) == false) {
+	if (customDetermine(data) == false) {
 		try {
 			if (typeof data != "object") {
 				data = JSON.parse(data);
@@ -38,7 +38,7 @@ for (let index = 0; index < 10; index++) {
 		} catch (error) {
 			githubAction.core.setFailed(`Fail to parse variable list #${index}: ${error}`);
 		};
-		if (customNullDetermine(name) == false) {
+		if (customDetermine(name) == false) {
 			inputVariableLists[name] = data;
 		} else {
 			inputVariableLists[index] = data;
@@ -48,16 +48,16 @@ for (let index = 0; index < 10; index++) {
 		break;
 	};
 };
-if (customNullDetermine(inputCannotVariable.variableJoin) == true) {
+if (customDetermine(inputCannotVariable.variableJoin) == true) {
 	inputCannotVariable.variableJoin = "_";
 };
-if (customNullDetermine(inputCannotVariable.variablePrefix) == true) {
+if (customDetermine(inputCannotVariable.variablePrefix) == true) {
 	inputCannotVariable.variablePrefix = "%";
 };
-if (customNullDetermine(inputCannotVariable.variableSuffix) == true) {
+if (customDetermine(inputCannotVariable.variableSuffix) == true) {
 	inputCannotVariable.variableSuffix = "%";
 };
-if (customNullDetermine(inputVariableLists) == false) {
+if (customDetermine(inputVariableLists) == false) {
 	if (Object.keys(inputVariableLists).length == 1) {
 		inputVariableLists = Object.values(inputVariableLists)[0];
 	};
@@ -75,7 +75,7 @@ if (customNullDetermine(inputVariableLists) == false) {
 	Promise.allSettled(
 		Object.keys(inputCanVariable).map((item, index) => {
 			new Promise((resolve, reject) => {
-				if (customNullDetermine(item) == false) {
+				if (customDetermine(item) == false) {
 					Object.keys(inputVariableLists).forEach((key, index) => {
 						inputCanVariable[item] = inputCanVariable[item].replace(
 							new RegExp(`${inputCannotVariable.variablePrefix}${key}${inputCannotVariable.variableSuffix}`, "gu"),

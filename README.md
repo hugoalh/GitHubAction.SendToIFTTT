@@ -1,19 +1,19 @@
-# [GitHub Action] Send To IFTTT
+# \[GitHub Action\] Send To IFTTT
 
 [`hugoalh/GitHubAction.SendToIFTTT`](https://github.com/hugoalh/GitHubAction.SendToIFTTT)
 
-[![](https://img.shields.io/github/contributors/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github)](https://github.com/hugoalh/GitHubAction.SendToIFTTT/graphs/contributors)
-[![](https://img.shields.io/github/license/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github)](https://github.com/hugoalh/GitHubAction.SendToIFTTT/blob/master/LICENSE.md)
-![](https://img.shields.io/github/languages/count/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github)
-![](https://img.shields.io/github/languages/top/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github)
-![](https://img.shields.io/github/repo-size/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github)
-![](https://img.shields.io/github/languages/code-size/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github)
-![](https://img.shields.io/github/watchers/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github)
-![](https://img.shields.io/github/stars/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github)
-![](https://img.shields.io/github/forks/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&logo=github)
-[![](https://www.codefactor.io/repository/github/hugoalh/githubaction.sendtoifttt/badge)](https://www.codefactor.io/repository/github/hugoalh/githubaction.sendtoifttt)
-[![](https://img.shields.io/lgtm/alerts/g/hugoalh/GitHubAction.SendToIFTTT.svg?style=flat-square&logo=lgtm&label=%20)](https://lgtm.com/projects/g/hugoalh/GitHubAction.SendToIFTTT/alerts)
-[![](https://img.shields.io/lgtm/grade/javascript/g/hugoalh/GitHubAction.SendToIFTTT.svg?style=flat-square&logo=lgtm)](https://lgtm.com/projects/g/hugoalh/GitHubAction.SendToIFTTT/context:javascript)
+[![GitHub Contributors](https://img.shields.io/github/contributors/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)](https://github.com/hugoalh/GitHubAction.SendToIFTTT/graphs/contributors)
+[![License](https://img.shields.io/github/license/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)](./LICENSE.md)
+![GitHub Language Count](https://img.shields.io/github/languages/count/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
+![GitHub Top Langauge](https://img.shields.io/github/languages/top/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
+![GitHub Code Size](https://img.shields.io/github/languages/code-size/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
+![GitHub Watchers](https://img.shields.io/github/watchers/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
+![GitHub Stars](https://img.shields.io/github/stars/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
+![GitHub Forks](https://img.shields.io/github/forks/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
+[![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/hugoalh/GitHubAction.SendToIFTTT?logo=codefactor&logoColor=ffffff&style=flat-square)](https://www.codefactor.io/repository/github/hugoalh/githubaction.sendtoifttt)
+[![LGTM Alerts](https://img.shields.io/lgtm/alerts/g/hugoalh/GitHubAction.SendToIFTTT.svg?label=%20&logo=lgtm&logoColor=ffffff&style=flat-square)](https://lgtm.com/projects/g/hugoalh/GitHubAction.SendToIFTTT/alerts)
+[![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/g/hugoalh/GitHubAction.SendToIFTTT.svg?logo=lgtm&logoColor=ffffff&style=flat-square)](https://lgtm.com/projects/g/hugoalh/GitHubAction.SendToIFTTT/context:javascript)
 
 | **[Release](https://github.com/hugoalh/GitHubAction.SendToIFTTT/releases)** ![](https://img.shields.io/github/downloads/hugoalh/GitHubAction.SendToIFTTT/total?style=flat-square&color=000000&label=%20) | **[Issue](https://github.com/hugoalh/GitHubAction.SendToIFTTT/issues?q=is%3Aissue)** | **[Pull Request](https://github.com/hugoalh/GitHubAction.SendToIFTTT/pulls?q=is%3Apr)** |
 |:----|:----|:----|
@@ -33,7 +33,8 @@ Any
 
 #### Software
 
-NodeJS v12
+- NodeJS v12
+- NPM v6+
 
 ### 📥 Input
 
@@ -57,12 +58,51 @@ NodeJS v12
 
 ### 📤 Output
 
-*N/A*.
+*(N/A)*
 
 ### Example
 
-*See [workflow_example.yml](./workflow_example.yml)*.
+```yaml
+jobs:
+  send-to-ifttt:
+    name: "Send To IFTTT"
+    runs-on: "ubuntu-latest"
+    needs:
+      - "fetch-payload-data"
+    steps:
+      - id: "send-to-ifttt-main"
+        uses: "hugoalh/GitHubAction.SendToIFTTT@v2.0.0"
+        with:
+          webhook_eventname: "say_hello"
+          webhook_key: "${{secrets.IFTTT_WEBHOOK_KEY}}"
+          value1: "Hello, world!"
+          # value2:
+          # value3:
+          # variable_list_0_name:
+          variable_list_0_data: "${{needs.fetch-payload-data.outputs.payload-data}}"
+          # variable_list_1_name:
+          # variable_list_1_data:
+          # variable_list_2_name:
+          # variable_list_2_data:
+          # variable_list_3_name:
+          # variable_list_3_data:
+          # variable_list_4_name:
+          # variable_list_4_data:
+          # variable_list_5_name:
+          # variable_list_5_data:
+          # variable_list_6_name:
+          # variable_list_6_data:
+          # variable_list_7_name:
+          # variable_list_7_data:
+          # variable_list_8_name:
+          # variable_list_8_data:
+          # variable_list_9_name:
+          # variable_list_9_data:
+          variable_prefix: "%"
+          variable_suffix: "%"
+          variable_join: "."
+```
 
 ### 📚 Guide
 
-- [GitHub Actions: Creating and storing encrypted secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
+[GitHub Actions: Creating and storing encrypted secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
