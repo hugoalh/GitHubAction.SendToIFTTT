@@ -44,8 +44,8 @@ Any
 |:----|:----|:----|:----|
 | `webhook_eventname` | ✔ | String | Webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower-case to prevent issue. |
 | `webhook_key` | ✔ | Secret String | Webhook key.<br />To obtain it, click `Menu` > `My Services` > `Webhooks` > `Settings`, your key is at `Account Info` > `URL` and after `https://maker.ifttt.com/use/`.<br /><img src="https://i.imgur.com/ihnqN5B.png" width="auto" height="256px" /><br />To regenerate it, click `Edit`.|
-| `variable_list_<Number>_name` |  | String | Namespace for this variable list. Only use when having multiple variable lists. Number start at `0`, maximum 10 variable lists. |
-| `variable_list_<Number>_data` | When have `variable_list_<Number>_name` | Stringified JSON | Variable list that will use in the data. Number start at `0`, maximum 10 variable lists. |
+| `variable_list_<Number>_name` |  | String | Namespace for this variable list. Only use when having multiple variable lists. Number start at `0`, maximum 4 variable lists. |
+| `variable_list_<Number>_data` | When have `variable_list_<Number>_name` | Stringified JSON | Variable list that will use in the data. Number start at `0`, maximum 4 variable lists. |
 | `variable_prefix` |  | String | Variable prefix. Default: `%`. |
 | `variable_suffix` |  | String | Variable suffix. Default: `%`. |
 | `variable_join` |  | String | Variable join if having multiple variable lists, and/or variable list has depth. Default: `_`. |
