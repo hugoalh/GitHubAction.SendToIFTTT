@@ -35,7 +35,7 @@ if (advancedDetermine.isString(inputCannotVariable.variableSuffix) != true) {
 if (advancedDetermine.isString(inputCannotVariable.webhookKey) != true) {
 	internalService.prefabTypeError("webhook_key", "string");
 };
-if (advancedDetermine.isString(inputCannotVariable.webhookEventName) != true) {
+if (advancedDetermine.isString(inputCanVariable.webhookEventName) != true) {
 	internalService.prefabTypeError("webhook_eventname", "string");
 };
 let inputVariableListPayload = githubAction.github.context.payload;
@@ -102,7 +102,7 @@ const requestPayload = JSON.stringify({
 	"value3": inputCanVariable.value3
 });
 https.request(
-	`https://maker.ifttt.com/trigger/${inputCannotVariable.webhookEventName}/with/key/${inputCannotVariable.webhookKey}`,
+	`https://maker.ifttt.com/trigger/${inputCanVariable.webhookEventName}/with/key/${inputCannotVariable.webhookKey}`,
 	{
 		port: 443,
 		method: "POST",
