@@ -11,7 +11,7 @@
 ![GitHub Watchers](https://img.shields.io/github/watchers/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
 ![GitHub Stars](https://img.shields.io/github/stars/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
 ![GitHub Forks](https://img.shields.io/github/forks/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
-[![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/hugoalh-studio/GitHubAction.SendToIFTTT?logo=codefactor&logoColor=ffffff&style=flat-square)](https://www.codefactor.io/repository/github/hugoalh-studio/githubaction.sendtoifttt)
+[![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/hugoalh/GitHubAction.SendToIFTTT?logo=codefactor&logoColor=ffffff&style=flat-square)](https://www.codefactor.io/repository/github/hugoalh/githubaction.sendtoifttt)
 [![LGTM Alerts](https://img.shields.io/lgtm/alerts/g/hugoalh/GitHubAction.SendToIFTTT.svg?label=%20&logo=lgtm&logoColor=ffffff&style=flat-square)](https://lgtm.com/projects/g/hugoalh/GitHubAction.SendToIFTTT/alerts)
 [![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/g/hugoalh/GitHubAction.SendToIFTTT.svg?logo=lgtm&logoColor=ffffff&style=flat-square)](https://lgtm.com/projects/g/hugoalh/GitHubAction.SendToIFTTT/context:javascript)
 
