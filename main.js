@@ -101,7 +101,7 @@ const requestPayload = JSON.stringify({
 	"value2": inputCanVariable.value2,
 	"value3": inputCanVariable.value3
 });
-https.request(
+const requestNode = https.request(
 	`https://maker.ifttt.com/trigger/${inputCanVariable.webhookEventName}/with/key/${inputCannotVariable.webhookKey}`,
 	{
 		port: 443,
@@ -121,9 +121,12 @@ https.request(
 			}
 		);
 	}
-).write(requestPayload).on(
+);
+requestNode.write(requestPayload);
+requestNode.on(
 	"error",
 	(error) => {
 		throw new Error(error);
 	}
-).end();
+);
+requestNode.end();
