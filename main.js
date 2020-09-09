@@ -3,107 +3,115 @@
 	Language:
 		NodeJS 14
 ==================*/
-const https = require("https");
+const advancedDetermine = require("@hugoalh/advanced-determine");
 const githubAction = {
-	core: require("@actions/core")
+	core: require("@actions/core"),
+	github: require("@actions/github")
 };
-const customNullDetermine = require("./customnulldetermine.js");
+const https = require("https");
+const internalService = require("./internalservice.js");
 const jsonFlatten = require("flat").flatten;
 let inputCannotVariable = {
-	webhookEventName: githubAction.core.getInput("webhook_eventname"),
-	webhookKey: githubAction.core.getInput("webhook_key"),
+	variableJoin: githubAction.core.getInput("variable_join"),
 	variablePrefix: githubAction.core.getInput("variable_prefix"),
 	variableSuffix: githubAction.core.getInput("variable_suffix"),
-	variableJoin: githubAction.core.getInput("variable_join")
+	webhookKey: githubAction.core.getInput("webhook_key")
 };
 let inputCanVariable = {
 	value1: githubAction.core.getInput("value1"),
 	value2: githubAction.core.getInput("value2"),
-	value3: githubAction.core.getInput("value3")
+	value3: githubAction.core.getInput("value3"),
+	webhookEventName: githubAction.core.getInput("webhook_eventname")
 };
-if (customNullDetermine(inputCannotVariable.webhookEventName) == false && customNullDetermine(inputCannotVariable.webhookKey) == false) {
-	inputCannotVariable.webhookUrl = `https://maker.ifttt.com/trigger/${inputCannotVariable.webhookEventName}/with/key/${inputCannotVariable.webhookKey}`;
-} else {
-	githubAction.core.setFailed(`Invalid type of "webhook_eventname" or "webhook_key"! Require type of string.`);
+if (advancedDetermine.isString(inputCannotVariable.variableJoin) != true) {
+	internalService.prefabTypeError("variable_join", "string");
 };
-let inputVariableLists = {};
-for (let index = 0; index < 10; index++) {
-	let name = githubAction.core.getInput(`variable_list_${index}_name`),
-		data = githubAction.core.getInput(`variable_list_${index}_data`);
-	if (customNullDetermine(data) == false) {
-		try {
-			if (typeof data != "object") {
-				data = JSON.parse(data);
-			};
-		} catch (error) {
-			githubAction.core.setFailed(`Fail to parse variable list #${index}: ${error}`);
-		};
-		if (customNullDetermine(name) == false) {
-			inputVariableLists[name] = data;
-		} else {
-			inputVariableLists[index] = data;
-		};
-	} else {
-		githubAction.core.info(`Variable list #${index} is null, ignore remains.`);
+if (advancedDetermine.isString(inputCannotVariable.variablePrefix) != true) {
+	internalService.prefabTypeError("variable_prefix", "string");
+};
+if (advancedDetermine.isString(inputCannotVariable.variableSuffix) != true) {
+	internalService.prefabTypeError("variable_suffix", "string");
+};
+if (advancedDetermine.isString(inputCannotVariable.webhookKey) != true) {
+	internalService.prefabTypeError("webhook_key", "string");
+};
+if (advancedDetermine.isString(inputCannotVariable.webhookEventName) != true) {
+	internalService.prefabTypeError("webhook_eventname", "string");
+};
+let inputVariableListPayload = githubAction.github.context.payload;
+let inputVariableListExternal = githubAction.core.getInput(`variable_list_external`);
+switch (advancedDetermine.isString(inputVariableListExternal)) {
+	case false:
+		internalService.prefabTypeError("variable_list_external", "object.json");
 		break;
-	};
+	case null:
+		githubAction.core.info(`External variable list is null.`);
+		inputVariableListExternal = {};
+		break;
+	case true:
+		if (advancedDetermine.isStringifyJSON(inputVariableListExternal) == false) {
+			internalService.prefabTypeError("variable_list_external", "object.json");
+		};
+		try {
+			inputVariableListExternal = JSON.parse(inputVariableListExternal);
+		} catch (error) {
+			throw new Error(error);
+		};
+		break;
+	// No default case!
 };
-if (customNullDetermine(inputCannotVariable.variableJoin) == true) {
-	inputCannotVariable.variableJoin = "_";
-};
-if (customNullDetermine(inputCannotVariable.variablePrefix) == true) {
-	inputCannotVariable.variablePrefix = "%";
-};
-if (customNullDetermine(inputCannotVariable.variableSuffix) == true) {
-	inputCannotVariable.variableSuffix = "%";
-};
-if (customNullDetermine(inputVariableLists) == false) {
-	if (Object.keys(inputVariableLists).length == 1) {
-		inputVariableLists = Object.values(inputVariableLists)[0];
-	};
-	try {
-		inputVariableLists = jsonFlatten(
-			inputVariableLists,
-			{
-				delimiter: inputCannotVariable.variableJoin,
-				overwrite: true
-			}
-		);
-	} catch (error) {
-		githubAction.core.setFailed(`Fail to flatten variable list: ${error}`);
-	};
-	Promise.allSettled(
-		Object.keys(inputCanVariable).map((item, index) => {
-			new Promise((resolve, reject) => {
-				if (customNullDetermine(item) == false) {
-					Object.keys(inputVariableLists).forEach((key, index) => {
-						inputCanVariable[item] = inputCanVariable[item].replace(
-							new RegExp(`${inputCannotVariable.variablePrefix}${key}${inputCannotVariable.variableSuffix}`, "gu"),
-							inputVariableLists[key]
-						);
-					});
-				};
-			}).catch((error) => { });
-		})
+try {
+	inputVariableListPayload = jsonFlatten(
+		inputVariableListPayload,
+		{
+			delimiter: inputCannotVariable.variableJoin
+		}
 	);
+} catch (error) {
+	throw new Error(error);
 };
-const output = {
+try {
+	inputVariableListExternal = jsonFlatten(
+		inputVariableListExternal,
+		{
+			delimiter: inputCannotVariable.variableJoin
+		}
+	);
+} catch (error) {
+	throw new Error(error);
+};
+Object.keys(inputVariableListPayload).forEach((key) => {
+	Object.keys(inputCanVariable).forEach((element) => {
+		inputCanVariable[element] = inputCanVariable[element].replace(
+			new RegExp(`${inputCannotVariable.variablePrefix}payload${inputCannotVariable.variableJoin}${key}${inputCannotVariable.variableSuffix}`, "gu"),
+			inputVariableListPayload[key]
+		);
+	});
+});
+Object.keys(inputVariableListExternal).forEach((key) => {
+	Object.keys(inputCanVariable).forEach((element) => {
+		inputCanVariable[element] = inputCanVariable[element].replace(
+			new RegExp(`${inputCannotVariable.variablePrefix}external${inputCannotVariable.variableJoin}${key}${inputCannotVariable.variableSuffix}`, "gu"),
+			inputVariableListExternal[key]
+		);
+	});
+});
+const requestPayload = JSON.stringify({
 	"value1": inputCanVariable.value1,
 	"value2": inputCanVariable.value2,
 	"value3": inputCanVariable.value3
-};
-const requestPayload = JSON.stringify(output);
-const requestOption = {
-	port: 443,
-	method: "POST",
-	headers: {
-		"Content-Type": "application/json",
-		"Content-Length": requestPayload.length
-	}
-};
-const requestNode = https.request(
-	inputCannotVariable.webhookUrl,
-	requestOption,
+});
+https.request(
+	`https://maker.ifttt.com/trigger/${inputCannotVariable.webhookEventName}/with/key/${inputCannotVariable.webhookKey}`,
+	{
+		port: 443,
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"Content-Length": requestPayload.length,
+			"User-Agent": internalService.preset.header.userAgent
+		}
+	},
 	(result) => {
 		console.log(`Status Code: ${result.statusCode}`);
 		result.on(
@@ -113,12 +121,9 @@ const requestNode = https.request(
 			}
 		);
 	}
-);
-requestNode.on(
+).write(requestPayload).on(
 	"error",
 	(error) => {
-		githubAction.core.setFailed(error);
+		throw new Error(error);
 	}
-);
-requestNode.write(requestPayload);
-requestNode.end();
+).end();
