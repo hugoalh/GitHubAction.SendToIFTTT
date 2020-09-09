@@ -21,7 +21,7 @@
 
 ## 📜 Description
 
-Send data to IFTTT applet via webhook, support external variables.
+Send data to IFTTT applet via webhook, support variables.
 
 ## 🛠 Configuration
 
@@ -40,23 +40,27 @@ Any
 
 #### Not Support Variable
 
-- **`webhook_eventname`:** `<string>` Webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower-case to prevent issue.
 - **`webhook_key`:** `<string.secret>` Webhook key.
   > To obtain it, click `Menu` > `My Services` > `Webhooks` > `Settings`, your key is at `Account Info` > `URL` and after `https://maker.ifttt.com/use/`.
   > 
   > ![](https://i.imgur.com/ihnqN5B.png)
   > 
   > To regenerate it, click `Edit`.
-- **`variable_list_external` \[Optional\]:** `<object.json>` External variable list that will use in the data.
+- **`variable_list_external` \[Optional\]:** `<object.json>` External variable list that will use in the data. Can import from other actions' output.
 - **`variable_prefix` \[Optional\]:** `<string = "%">` Variable prefix.
 - **`variable_suffix` \[Optional\]:** `<string = "%">` Variable suffix.
 - **`variable_join` \[Optional\]:** `<string = "_">` Variable join if the variable list has depth.
 
 #### Support Variable
 
+- **`webhook_eventname`:** `<string>` Webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower-case to prevent issue.
 - **`value1` \[Optional\]:** `<string>` Default IFTTT ingredient namespace.
 - **`value2` \[Optional\]:** `<string>` Default IFTTT ingredient namespace.
 - **`value3` \[Optional\]:** `<string>` Default IFTTT ingredient namespace.
+
+To use GitHub Action context variable list, use placeholder `"${{github.event.<namespace>}}"` in the workflow file (parse by GitHub Action), or use placeholder `"<variable_prefix>payload<variable_join><namespace><variable_suffix>"` in the workflow file which marked "Support Variable" (parse by this action).
+
+To use external variable list, use placeholder `"<variable_prefix>external<variable_join><namespace><variable_suffix>"` in the workflow file which marked "Support Variable" (parse by this action).
 
 ### 📤 Output
 
@@ -86,4 +90,5 @@ jobs:
 
 ### 📚 Guide
 
-[GitHub Actions: Creating and storing encrypted secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
+- [GitHub: Webhook event payloads](https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads)
+- [GitHub Actions: Creating and storing encrypted secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)

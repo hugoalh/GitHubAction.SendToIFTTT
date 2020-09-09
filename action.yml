@@ -1,6 +1,6 @@
 name: "Send To IFTTT"
 author: "hugoalh"
-description: "Send data to IFTTT applet via webhook, support external variables."
+description: "Send data to IFTTT applet via webhook, support variables."
 inputs:
   webhook_eventname:
     description: "{string} Webhook event name."

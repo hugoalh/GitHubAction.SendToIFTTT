@@ -5,6 +5,17 @@
 ==================*/
 /**
  * @private
+ * @const {object} preset
+ * @const {object} preset.header
+ * @const {string} preset.header.userAgent
+ */
+const preset = {
+	header: {
+		userAgent: `NodeJS/${process.version.replace(/v/giu, "")} GitHubAction.SendToIFTTT/2.0.0`
+	}
+};
+/**
+ * @private
  * @function prefabNoInputError
  * @param {string} argumentName
  * @returns {Error}
@@ -32,6 +43,7 @@ function prefabReferenceError(argumentName, description = "(Read the documentati
 function prefabTypeError(argumentName, typeCondition) {
 	throw new TypeError(`Invalid type of "${argumentName}"! Require type of ${typeCondition}.`);
 };
+module.exports.preset = preset;
 module.exports.prefabNoInputError = prefabNoInputError;
 module.exports.prefabReferenceError = prefabReferenceError;
 module.exports.prefabTypeError = prefabTypeError;
