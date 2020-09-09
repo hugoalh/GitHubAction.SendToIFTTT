@@ -3,11 +3,13 @@
 	Language:
 		NodeJS 14
 ==================*/
-const customDetermine = require("./customdetermine.js");
+const advancedDetermine = require("@hugoalh/advanced-determine");
 const githubAction = {
-	core: require("@actions/core")
+	core: require("@actions/core"),
+	github: require("@actions/github")
 };
 const https = require("https");
+const internalService = require("./internalservice.js");
 const jsonFlatten = require("flat").flatten;
 let inputCannotVariable = {
 	webhookEventName: githubAction.core.getInput("webhook_eventname"),
@@ -21,89 +23,94 @@ let inputCanVariable = {
 	value2: githubAction.core.getInput("value2"),
 	value3: githubAction.core.getInput("value3")
 };
-if (customDetermine(inputCannotVariable.webhookEventName) == false && customDetermine(inputCannotVariable.webhookKey) == false) {
-	inputCannotVariable.webhookUrl = `https://maker.ifttt.com/trigger/${inputCannotVariable.webhookEventName}/with/key/${inputCannotVariable.webhookKey}`;
-} else {
-	githubAction.core.setFailed(`Invalid type of "webhook_eventname" or "webhook_key"! Require type of string.`);
+if (advancedDetermine.isString(inputCannotVariable.webhookEventName) != true) {
+	internalService.prefabTypeError("webhook_eventname", "string");
 };
-let inputVariableLists = {};
-for (let index = 0; index < 4; index++) {
-	let name = githubAction.core.getInput(`variable_list_${index}_name`),
-		data = githubAction.core.getInput(`variable_list_${index}_data`);
-	if (customDetermine(data) == false) {
-		try {
-			if (typeof data != "object") {
-				data = JSON.parse(data);
-			};
-		} catch (error) {
-			githubAction.core.setFailed(`Fail to parse variable list #${index}: ${error}`);
-		};
-		if (customDetermine(name) == false) {
-			inputVariableLists[name] = data;
-		} else {
-			inputVariableLists[index] = data;
-		};
-	} else {
-		githubAction.core.info(`Variable list #${index} is null, ignore remains.`);
+if (advancedDetermine.isString(inputCannotVariable.webhookKey) != true) {
+	internalService.prefabTypeError("webhook_key", "string");
+};
+inputCannotVariable.webhookUrl = `https://maker.ifttt.com/trigger/${inputCannotVariable.webhookEventName}/with/key/${inputCannotVariable.webhookKey}`;
+let inputPayloadList = githubAction.github.context.payload;
+let inputVariableList = githubAction.core.getInput(`variable_list_external`);
+switch (advancedDetermine.isString(inputVariableList)) {
+	case false:
+		internalService.prefabTypeError("variable_list_external", "object.json");
 		break;
-	};
+	case null:
+		inputVariableList = {};
+		githubAction.core.info(`External variable list is null.`);
+		break;
+	case true:
+		if (advancedDetermine.isStringifyJSON(inputVariableList) == false) {
+			internalService.prefabTypeError("variable_list_external", "object.json");
+		};
+		try {
+			inputVariableList = JSON.parse(inputVariableList);
+		} catch (error) {
+			throw new Error(error);
+		};
+		break;
 };
-if (customDetermine(inputCannotVariable.variableJoin) == true) {
-	inputCannotVariable.variableJoin = "_";
+if (advancedDetermine.isString(inputCannotVariable.variableJoin) != true) {
+	internalService.prefabTypeError("variable_join", "string");
 };
-if (customDetermine(inputCannotVariable.variablePrefix) == true) {
-	inputCannotVariable.variablePrefix = "%";
+if (advancedDetermine.isString(inputCannotVariable.variablePrefix) != true) {
+	internalService.prefabTypeError("variable_prefix", "string");
 };
-if (customDetermine(inputCannotVariable.variableSuffix) == true) {
-	inputCannotVariable.variableSuffix = "%";
+if (advancedDetermine.isString(inputCannotVariable.variableSuffix) != true) {
+	internalService.prefabTypeError("variable_suffix", "string");
 };
-if (customDetermine(inputVariableLists) == false) {
-	if (Object.keys(inputVariableLists).length == 1) {
-		inputVariableLists = Object.values(inputVariableLists)[0];
-	};
-	try {
-		inputVariableLists = jsonFlatten(
-			inputVariableLists,
-			{
-				delimiter: inputCannotVariable.variableJoin,
-				overwrite: true
-			}
-		);
-	} catch (error) {
-		githubAction.core.setFailed(`Fail to flatten variable list: ${error}`);
-	};
-	Promise.allSettled(
-		Object.keys(inputCanVariable).map((item) => {
-			new Promise(() => {
-				if (customDetermine(item) == false) {
-					Object.keys(inputVariableLists).forEach((key) => {
-						inputCanVariable[item] = inputCanVariable[item].replace(
-							new RegExp(`${inputCannotVariable.variablePrefix}${key}${inputCannotVariable.variableSuffix}`, "gu"),
-							inputVariableLists[key]
-						);
-					});
-				};
-			}).catch();
-		})
+try {
+	inputPayloadList = jsonFlatten(
+		inputPayloadList,
+		{
+			delimiter: inputCannotVariable.variableJoin
+		}
 	);
+} catch (error) {
+	throw new Error(error);
 };
-const output = {
+try {
+	inputVariableList = jsonFlatten(
+		inputVariableList,
+		{
+			delimiter: inputCannotVariable.variableJoin
+		}
+	);
+} catch (error) {
+	throw new Error(error);
+};
+Object.keys(inputPayloadList).forEach((key) => {
+	Object.keys(inputCanVariable).forEach((element) => {
+		inputCanVariable[element] = inputCanVariable[element].replace(
+			new RegExp(`${inputCannotVariable.variablePrefix}payload${inputCannotVariable.variableJoin}${key}${inputCannotVariable.variableSuffix}`, "gu"),
+			inputPayloadList[key]
+		);
+	});
+});
+Object.keys(inputVariableList).forEach((key) => {
+	Object.keys(inputCanVariable).forEach((element) => {
+		inputCanVariable[element] = inputCanVariable[element].replace(
+			new RegExp(`${inputCannotVariable.variablePrefix}${key}${inputCannotVariable.variableSuffix}`, "gu"),
+			inputVariableList[key]
+		);
+	});
+});
+const requestPayload = JSON.stringify({
 	"value1": inputCanVariable.value1,
 	"value2": inputCanVariable.value2,
 	"value3": inputCanVariable.value3
-};
-const requestPayload = JSON.stringify(output);
-const requestOption = {
-	port: 443,
-	method: "POST",
-	headers: {
-		"Content-Type": "application/json",
-		"Content-Length": requestPayload.length
-	}
-};
-const requestNode = https.request(
+});
+https.request(
 	inputCannotVariable.webhookUrl,
-	requestOption,
+	{
+		port: 443,
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"Content-Length": requestPayload.length
+		}
+	},
 	(result) => {
 		console.log(`Status Code: ${result.statusCode}`);
 		result.on(
@@ -113,12 +120,9 @@ const requestNode = https.request(
 			}
 		);
 	}
-);
-requestNode.on(
+).write(requestPayload).on(
 	"error",
 	(error) => {
-		githubAction.core.setFailed(error);
+		throw new Error(error);
 	}
-);
-requestNode.write(requestPayload);
-requestNode.end();
+).end();

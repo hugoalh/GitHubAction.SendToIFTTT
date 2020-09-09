@@ -1,6 +1,6 @@
 name: "Send To IFTTT"
 author: "hugoalh"
-description: "Send data to IFTTT applet via webhook, support variables."
+description: "Send data to IFTTT applet via webhook, support external variables."
 inputs:
   webhook_eventname:
     description: "{string} Webhook event name."
@@ -17,8 +17,8 @@ inputs:
   value3:
     description: "{string} Default IFTTT ingredient namespace."
     required: false
-  variable_list:
-    description: "{object.json} Variable list that will use in the data."
+  variable_list_external:
+    description: "{object.json} External variable list that will use in the data."
     required: false
   variable_prefix:
     description: "{string} Variable prefix."

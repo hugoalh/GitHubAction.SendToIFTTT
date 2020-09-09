@@ -21,7 +21,7 @@
 
 ## 📜 Description
 
-Send data to IFTTT applet via webhook, support variables.
+Send data to IFTTT applet via webhook, support external variables.
 
 ## 🛠 Configuration
 
@@ -47,7 +47,7 @@ Any
   > ![](https://i.imgur.com/ihnqN5B.png)
   > 
   > To regenerate it, click `Edit`.
-- **`variable_list` \[Optional\]:** `<object.json>` Variable list that will use in the data.
+- **`variable_list_external` \[Optional\]:** `<object.json>` External variable list that will use in the data.
 - **`variable_prefix` \[Optional\]:** `<string = "%">` Variable prefix.
 - **`variable_suffix` \[Optional\]:** `<string = "%">` Variable suffix.
 - **`variable_join` \[Optional\]:** `<string = "_">` Variable join if the variable list has depth.
