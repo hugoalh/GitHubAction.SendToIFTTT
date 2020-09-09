@@ -38,23 +38,25 @@ Any
 
 ### 📥 Input
 
-**Not support variable:**
+#### Not Support Variable
 
-| **Key** | **Require? / Require Condition?** | **Type** | **Description** |
-|:----|:----|:----|:----|
-| `webhook_eventname` | ✔ | String | Webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower-case to prevent issue. |
-| `webhook_key` | ✔ | Secret String | Webhook key.<br />To obtain it, click `Menu` > `My Services` > `Webhooks` > `Settings`, your key is at `Account Info` > `URL` and after `https://maker.ifttt.com/use/`.<br /><img src="https://i.imgur.com/ihnqN5B.png" width="auto" height="256px" /><br />To regenerate it, click `Edit`.|
-| `variable_list_<Number>_name` |  | String | Namespace for this variable list. Only use when having multiple variable lists. Number start at `0`, maximum 4 variable lists. |
-| `variable_list_<Number>_data` | When have `variable_list_<Number>_name` | Stringified JSON | Variable list that will use in the data. Number start at `0`, maximum 4 variable lists. |
-| `variable_prefix` |  | String | Variable prefix. Default: `%`. |
-| `variable_suffix` |  | String | Variable suffix. Default: `%`. |
-| `variable_join` |  | String | Variable join if having multiple variable lists, and/or variable list has depth. Default: `_`. |
+- **`webhook_eventname`:** `<string>` Webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower-case to prevent issue.
+- **`webhook_key`:** `<string.secret>` Webhook key.
+  > To obtain it, click `Menu` > `My Services` > `Webhooks` > `Settings`, your key is at `Account Info` > `URL` and after `https://maker.ifttt.com/use/`.
+  > 
+  > ![](https://i.imgur.com/ihnqN5B.png)
+  > 
+  > To regenerate it, click `Edit`.
+- **`variable_list` \[Optional\]:** `<object.json>` Variable list that will use in the data.
+- **`variable_prefix` \[Optional\]:** `<string = "%">` Variable prefix.
+- **`variable_suffix` \[Optional\]:** `<string = "%">` Variable suffix.
+- **`variable_join` \[Optional\]:** `<string = "_">` Variable join if the variable list has depth.
 
-**Support variable (& optional):**
+#### Support Variable
 
-| **Key** | **Type** | **Description** |
-|:----|:----|:----|
-| - `value1`<br />- `value2`<br />- `value3` | String | Default IFTTT ingredient namespace. |
+- **`value1` \[Optional\]:** `<string>` Default IFTTT ingredient namespace.
+- **`value2` \[Optional\]:** `<string>` Default IFTTT ingredient namespace.
+- **`value3` \[Optional\]:** `<string>` Default IFTTT ingredient namespace.
 
 ### 📤 Output
 
@@ -67,8 +69,6 @@ jobs:
   send-to-ifttt:
     name: "Send To IFTTT"
     runs-on: "ubuntu-latest"
-    needs:
-      - "fetch-payload-data"
     steps:
       - id: "send-to-ifttt-main"
         uses: "hugoalh/GitHubAction.SendToIFTTT@v2.0.0"
@@ -78,14 +78,7 @@ jobs:
           value1: "Hello, world!"
           # value2:
           # value3:
-          # variable_list_0_name:
-          variable_list_0_data: "${{needs.fetch-payload-data.outputs.payload-data}}"
-          # variable_list_1_name:
-          # variable_list_1_data:
-          # variable_list_2_name:
-          # variable_list_2_data:
-          # variable_list_3_name:
-          # variable_list_3_data:
+          # variable_list:
           variable_prefix: "%"
           variable_suffix: "%"
           variable_join: "."

@@ -3,54 +3,33 @@ author: "hugoalh"
 description: "Send data to IFTTT applet via webhook, support variables."
 inputs:
   webhook_eventname:
-    description: "[String] Webhook event name."
+    description: "{string} Webhook event name."
     required: true
   webhook_key:
-    description: "[Secret String] Webhook key."
+    description: "{string.secret} Webhook key."
     required: true
   value1:
-    description: "[String] Default IFTTT ingredient namespace."
+    description: "{string} Default IFTTT ingredient namespace."
     required: false
   value2:
-    description: "[String] Default IFTTT ingredient namespace."
+    description: "{string} Default IFTTT ingredient namespace."
     required: false
   value3:
-    description: "[String] Default IFTTT ingredient namespace."
+    description: "{string} Default IFTTT ingredient namespace."
     required: false
-  variable_list_0_name:
-    description: "[String] Namespace for this variable list."
-    required: false
-  variable_list_0_data:
-    description: "[Stringified JSON] Variable list that will use in the data."
-    required: false
-  variable_list_1_name:
-    description: "[String] Namespace for this variable list."
-    required: false
-  variable_list_1_data:
-    description: "[Stringified JSON] Variable list that will use in the data."
-    required: false
-  variable_list_2_name:
-    description: "[String] Namespace for this variable list."
-    required: false
-  variable_list_2_data:
-    description: "[Stringified JSON] Variable list that will use in the data."
-    required: false
-  variable_list_3_name:
-    description: "[String] Namespace for this variable list."
-    required: false
-  variable_list_3_data:
-    description: "[Stringified JSON] Variable list that will use in the data."
+  variable_list:
+    description: "{object.json} Variable list that will use in the data."
     required: false
   variable_prefix:
-    description: "[String] Variable prefix."
+    description: "{string} Variable prefix."
     required: false
     default: "%"
   variable_suffix:
-    description: "[String] Variable suffix."
+    description: "{string} Variable suffix."
     required: false
     default: "%"
   variable_join:
-    description: "[String] Variable join if having multiple variable lists, and/or variable list has depth."
+    description: "{string} Variable join if the variable list has depth."
     required: false
     default: "_"
 runs:

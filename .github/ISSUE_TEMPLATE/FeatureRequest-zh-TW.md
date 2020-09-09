@@ -2,7 +2,7 @@
 name: "功能要求"
 about: "提出一個想法。"
 title: ""
-labels: ""
+labels: "enhancement➕,unconfirm📋"
 assignees: ""
 ---
 ## 描述

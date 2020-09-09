@@ -2,7 +2,7 @@
 name: "錯誤報告"
 about: "報告一個錯誤。"
 title: ""
-labels: ""
+labels: "bug🐛,unconfirm📋"
 assignees: ""
 ---
 ## 描述
