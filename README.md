@@ -82,7 +82,7 @@ jobs:
           value1: "Hello, world!"
           # value2:
           # value3:
-          # variable_list:
+          # variable_list_external:
           variable_prefix: "%"
           variable_suffix: "%"
           variable_join: "."
