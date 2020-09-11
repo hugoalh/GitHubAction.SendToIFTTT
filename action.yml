@@ -3,10 +3,10 @@ author: "hugoalh"
 description: "Send data to IFTTT applet via webhook, support variables."
 inputs:
   webhook_eventname:
-    description: "{string} Webhook event name."
+    description: "{string} IFTTT webhook event name."
     required: true
   webhook_key:
-    description: "{string.secret} Webhook key."
+    description: "{string.secret} IFTTT webhook key."
     required: true
   value1:
     description: "{string} Default IFTTT ingredient namespace."

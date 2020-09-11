@@ -21,7 +21,7 @@
 
 ## 📜 Description
 
-Send data to IFTTT applet via webhook, support variables.
+An action to send data to IFTTT applet via webhook, support variables.
 
 ## 🛠 Configuration
 
@@ -40,7 +40,7 @@ Any
 
 #### Not Support Variable
 
-- **`webhook_key`:** `<string.secret>` Webhook key.
+- **`webhook_key`:** `<string.secret>` IFTTT webhook key.
   > To obtain it, click `Menu` > `My Services` > `Webhooks` > `Settings`, your key is at `Account Info` > `URL` and after `https://maker.ifttt.com/use/`.
   > 
   > ![](https://i.imgur.com/ihnqN5B.png)
@@ -53,7 +53,7 @@ Any
 
 #### Support Variable
 
-- **`webhook_eventname`:** `<string>` Webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower-case to prevent issue.
+- **`webhook_eventname`:** `<string>` IFTTT webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower-case to prevent issue.
 - **`value1` \[Optional\]:** `<string>` Default IFTTT ingredient namespace.
 - **`value2` \[Optional\]:** `<string>` Default IFTTT ingredient namespace.
 - **`value3` \[Optional\]:** `<string>` Default IFTTT ingredient namespace.
