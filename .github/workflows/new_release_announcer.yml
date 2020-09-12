@@ -4,19 +4,9 @@ on:
     types:
       - "published"
 jobs:
-  fetch-payload-data:
-    name: "Fetch Payload Data"
-    runs-on: "ubuntu-latest"
-    outputs:
-      payload-data: "${{steps.fetch-payload-data-main.outputs.data}}"
-    steps:
-      - id: "fetch-payload-data-main"
-        uses: "hugoalh/GitHubAction.EventPayloadFetcher@v2.0.1"
   send-to-discord:
     name: "Send To Discord"
     runs-on: "ubuntu-latest"
-    needs:
-      - "fetch-payload-data"
     steps:
       - id: "send-to-discord-main"
         uses: "hugoalh/GitHubAction.SendToDiscord@v2.0.0"
@@ -31,7 +21,7 @@ jobs:
           # message_embed_authoravatarurl:
           message_embed_title: "[GitHub Action] Send To IFTTT"
           message_embed_titleurl: "https://github.com/hugoalh/GitHubAction.SendToIFTTT"
-          message_embed_description: "Version %release.name% is released and available on GitHub!\n%release.html_url%"
+          message_embed_description: "Version %payload.release.name% is released and available on GitHub!\n%payload.release.html_url%"
           # message_embed_thumbnailurl:
           # message_embed_imageurl:
           # message_embed_videourl:
@@ -112,14 +102,7 @@ jobs:
           # message_embed_field_24_isinline:
           # message_embed_footericonurl:
           # message_embed_footertext:
-          # variable_list_0_name:
-          variable_list_0_data: "${{needs.fetch-payload-data.outputs.payload-data}}"
-          # variable_list_1_name:
-          # variable_list_1_data:
-          # variable_list_2_name:
-          # variable_list_2_data:
-          # variable_list_3_name:
-          # variable_list_3_data:
+          # variable_list_external:
           variable_prefix: "%"
           variable_suffix: "%"
           variable_join: "."
