@@ -88,9 +88,9 @@ Any
 #### Support Variable
 
 - **`webhook_eventname`:** `<string>` IFTTT webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower-case to prevent issue.
-- **`value1` \[Optional\]:** `<string>` Default IFTTT ingredient namespace.
-- **`value2` \[Optional\]:** `<string>` Default IFTTT ingredient namespace.
-- **`value3` \[Optional\]:** `<string>` Default IFTTT ingredient namespace.
+- **`value1` \[Optional\]:** `<string>` IFTTT default ingredient namespace.
+- **`value2` \[Optional\]:** `<string>` IFTTT default ingredient namespace.
+- **`value3` \[Optional\]:** `<string>` IFTTT default ingredient namespace.
 
 To use GitHub Action context variable list, use placeholder `"${{github.event.<namespace>}}"` in the workflow file (parse by GitHub Action), or use placeholder `"<variable_prefix>payload<variable_join><namespace><variable_suffix>"` in the workflow file which marked "Support Variable" (parse by this action).
 

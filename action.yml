@@ -9,13 +9,13 @@ inputs:
     description: "{string.secret} IFTTT webhook key."
     required: true
   value1:
-    description: "{string} Default IFTTT ingredient namespace."
+    description: "{string} IFTTT default ingredient namespace."
     required: false
   value2:
-    description: "{string} Default IFTTT ingredient namespace."
+    description: "{string} IFTTT default ingredient namespace."
     required: false
   value3:
-    description: "{string} Default IFTTT ingredient namespace."
+    description: "{string} IFTTT default ingredient namespace."
     required: false
   variable_list_external:
     description: "{object.json} External variable list that will use in the data."
