@@ -9,8 +9,8 @@ const githubAction = {
 	github: require("@actions/github")
 };
 const https = require("https");
-const internalService = require("./internalservice.js");
 const jsonFlatten = require("flat").flatten;
+let headerUserAgent = `NodeJS/${process.version.replace(/^v/giu, "")} GitHubAction.SendToIFTTT(@hugoalh)/2.0.1`;
 let inputCannotVariable = {
 	variableJoin: githubAction.core.getInput("variable_join"),
 	variablePrefix: githubAction.core.getInput("variable_prefix"),
@@ -23,63 +23,51 @@ let inputCanVariable = {
 	value3: githubAction.core.getInput("value3"),
 	webhookEventName: githubAction.core.getInput("webhook_eventname")
 };
-if (advancedDetermine.isString(inputCannotVariable.variableJoin) != true) {
-	internalService.prefabTypeError("variable_join", "string");
+if (advancedDetermine.isString(inputCannotVariable.variableJoin) !== true) {
+	throw new TypeError(`Argument "variable_join" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 };
-if (advancedDetermine.isString(inputCannotVariable.variablePrefix) != true) {
-	internalService.prefabTypeError("variable_prefix", "string");
+if (advancedDetermine.isString(inputCannotVariable.variablePrefix) !== true) {
+	throw new TypeError(`Argument "variable_prefix" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 };
-if (advancedDetermine.isString(inputCannotVariable.variableSuffix) != true) {
-	internalService.prefabTypeError("variable_suffix", "string");
+if (advancedDetermine.isString(inputCannotVariable.variableSuffix) !== true) {
+	throw new TypeError(`Argument "variable_suffix" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 };
-if (advancedDetermine.isString(inputCannotVariable.webhookKey) != true) {
-	internalService.prefabTypeError("webhook_key", "string");
+if (advancedDetermine.isString(inputCanVariable.webhookEventName) !== true) {
+	throw new TypeError(`Argument "webhook_eventname" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 };
-if (advancedDetermine.isString(inputCanVariable.webhookEventName) != true) {
-	internalService.prefabTypeError("webhook_eventname", "string");
+if (advancedDetermine.isString(inputCannotVariable.webhookKey) !== true) {
+	throw new TypeError(`Argument "webhook_key" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 };
 let inputVariableListPayload = githubAction.github.context.payload;
 let inputVariableListExternal = githubAction.core.getInput(`variable_list_external`);
 switch (advancedDetermine.isString(inputVariableListExternal)) {
 	case false:
-		internalService.prefabTypeError("variable_list_external", "object.json");
+		throw new TypeError(`Argument "variable_list_external" must be type of object JSON! ([GitHub Action] Send To IFTTT)`);
 		break;
 	case null:
-		githubAction.core.info(`External variable list is null.`);
+		githubAction.core.info(`External variable list is null. ([GitHub Action] Send To IFTTT)`);
 		inputVariableListExternal = {};
 		break;
 	case true:
-		if (advancedDetermine.isStringifyJSON(inputVariableListExternal) == false) {
-			internalService.prefabTypeError("variable_list_external", "object.json");
+		if (advancedDetermine.isStringifyJSON(inputVariableListExternal) === false) {
+			throw new TypeError(`Argument "variable_list_external" must be type of object JSON! ([GitHub Action] Send To IFTTT)`);
 		};
-		try {
-			inputVariableListExternal = JSON.parse(inputVariableListExternal);
-		} catch (error) {
-			throw new Error(error);
-		};
+		inputVariableListExternal = JSON.parse(inputVariableListExternal);
 		break;
 	// No default case!
 };
-try {
-	inputVariableListPayload = jsonFlatten(
-		inputVariableListPayload,
-		{
-			delimiter: inputCannotVariable.variableJoin
-		}
-	);
-} catch (error) {
-	throw new Error(error);
-};
-try {
-	inputVariableListExternal = jsonFlatten(
-		inputVariableListExternal,
-		{
-			delimiter: inputCannotVariable.variableJoin
-		}
-	);
-} catch (error) {
-	throw new Error(error);
-};
+inputVariableListPayload = jsonFlatten(
+	inputVariableListPayload,
+	{
+		delimiter: inputCannotVariable.variableJoin
+	}
+);
+inputVariableListExternal = jsonFlatten(
+	inputVariableListExternal,
+	{
+		delimiter: inputCannotVariable.variableJoin
+	}
+);
 Object.keys(inputVariableListPayload).forEach((key) => {
 	Object.keys(inputCanVariable).forEach((element) => {
 		inputCanVariable[element] = inputCanVariable[element].replace(
@@ -109,7 +97,7 @@ const requestNode = https.request(
 		headers: {
 			"Content-Type": "application/json",
 			"Content-Length": requestPayload.length,
-			"User-Agent": internalService.preset.header.userAgent
+			"User-Agent": headerUserAgent
 		}
 	},
 	(result) => {

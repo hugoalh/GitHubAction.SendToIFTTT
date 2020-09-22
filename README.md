@@ -1,27 +1,61 @@
 # \[GitHub Action\] Send To IFTTT
 
-[`hugoalh/GitHubAction.SendToIFTTT`](https://github.com/hugoalh/GitHubAction.SendToIFTTT)
+<details>
+  <summary><a href="https://github.com/hugoalh/GitHubAction.SendToIFTTT"><code>hugoalh/GitHubAction.SendToIFTTT</code></a></summary>
+  <img align="center" alt="GitHub Language Count" src="https://img.shields.io/github/languages/count/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square" />
+  <img align="center" alt="GitHub Top Langauge" src="https://img.shields.io/github/languages/top/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square" />
+  <img align="center" alt="GitHub Repo Size" src="https://img.shields.io/github/repo-size/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square" />
+  <img align="center" alt="GitHub Code Size" src="https://img.shields.io/github/languages/code-size/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square" />
+  <img align="center" alt="GitHub Watcher" src="https://img.shields.io/github/watchers/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square" />
+  <img align="center" alt="GitHub Star" src="https://img.shields.io/github/stars/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square" />
+  <img align="center" alt="GitHub Fork" src="https://img.shields.io/github/forks/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square" />
+</details>
 
-[![GitHub Contributors](https://img.shields.io/github/contributors/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)](https://github.com/hugoalh/GitHubAction.SendToIFTTT/graphs/contributors)
-[![License](https://img.shields.io/github/license/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)](./LICENSE.md)
-![GitHub Language Count](https://img.shields.io/github/languages/count/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
-![GitHub Top Langauge](https://img.shields.io/github/languages/top/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
-![GitHub Repo Size](https://img.shields.io/github/repo-size/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
-![GitHub Code Size](https://img.shields.io/github/languages/code-size/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
-![GitHub Watchers](https://img.shields.io/github/watchers/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
-![GitHub Stars](https://img.shields.io/github/stars/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
-![GitHub Forks](https://img.shields.io/github/forks/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square)
-[![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/hugoalh/GitHubAction.SendToIFTTT?logo=codefactor&logoColor=ffffff&style=flat-square)](https://www.codefactor.io/repository/github/hugoalh/githubaction.sendtoifttt)
-[![LGTM Alerts](https://img.shields.io/lgtm/alerts/g/hugoalh/GitHubAction.SendToIFTTT.svg?label=%20&logo=lgtm&logoColor=ffffff&style=flat-square)](https://lgtm.com/projects/g/hugoalh/GitHubAction.SendToIFTTT/alerts)
-[![LGTM Grade](https://img.shields.io/lgtm/grade/javascript/g/hugoalh/GitHubAction.SendToIFTTT.svg?logo=lgtm&logoColor=ffffff&style=flat-square)](https://lgtm.com/projects/g/hugoalh/GitHubAction.SendToIFTTT/context:javascript)
+A GitHub action to send data to IFTTT applet via webhook, support variables.
 
-| **[Release](https://github.com/hugoalh/GitHubAction.SendToIFTTT/releases)** ![](https://img.shields.io/github/downloads/hugoalh/GitHubAction.SendToIFTTT/total?style=flat-square&color=000000&label=%20) | **[Issue](https://github.com/hugoalh/GitHubAction.SendToIFTTT/issues?q=is%3Aissue)** | **[Pull Request](https://github.com/hugoalh/GitHubAction.SendToIFTTT/pulls?q=is%3Apr)** |
-|:----|:----|:----|
-| **Latest:** ![](https://img.shields.io/github/release/hugoalh/GitHubAction.SendToIFTTT?sort=semver&style=flat-square&color=000000&label=%20) (![](https://img.shields.io/github/release-date/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20))<br />**Pre:** ![](https://img.shields.io/github/release/hugoalh/GitHubAction.SendToIFTTT?include_prereleases&sort=semver&style=flat-square&color=000000&label=%20) (![](https://img.shields.io/github/release-date-pre/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20)) | **Open:** ![](https://img.shields.io/github/issues-raw/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20)<br />**Closed:** ![](https://img.shields.io/github/issues-closed-raw/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20) | **Open:** ![](https://img.shields.io/github/issues-pr-raw/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20)<br />**Closed:** ![](https://img.shields.io/github/issues-pr-closed-raw/hugoalh/GitHubAction.SendToIFTTT?style=flat-square&color=000000&label=%20) |
+<table>
+  <tr>
+    <td><a href="./LICENSE.md"><b>License</b></a></td>
+    <td>MIT</td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/hugoalh/GitHubAction.SendToIFTTT/releases"><b>Release</b></a> <img align="center" src="https://img.shields.io/github/downloads/hugoalh/GitHubAction.SendToIFTTT/total?label=%20&style=flat-square" /></td>
+    <td>
+      <b>Latest:</b> <img align="center" src="https://img.shields.io/github/release/hugoalh/GitHubAction.SendToIFTTT?sort=semver&label=%20&style=flat-square" /> (<img align="center" src="https://img.shields.io/github/release-date/hugoalh/GitHubAction.SendToIFTTT?label=%20&style=flat-square" />)<br />
+      <b>Pre:</b> <img align="center" src="https://img.shields.io/github/release/hugoalh/GitHubAction.SendToIFTTT?include_prereleases&sort=semver&label=%20&style=flat-square" /> (<img align="center" src="https://img.shields.io/github/release-date-pre/hugoalh/GitHubAction.SendToIFTTT?label=%20&style=flat-square" />)
+    </td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/hugoalh/GitHubAction.SendToIFTTT/graphs/contributors"><b>Contributor</b></a> <img align="center" src="https://img.shields.io/github/contributors/hugoalh/GitHubAction.SendToIFTTT?label=%20&style=flat-square" /></td>
+    <td><ul>
+        <li><a href="https://github.com/hugoalh">hugoalh</a></li>
+        <li><a href="https://github.com/hugoalh-studio">hugoalh Studio</a></li>
+    </ul></td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/hugoalh/GitHubAction.SendToIFTTT/issues?q=is%3Aissue"><b>Issue</b></a></td>
+    <td><img align="center" src="https://img.shields.io/github/issues-raw/hugoalh/GitHubAction.SendToIFTTT?label=%20&style=flat-square" /> : <img align="center" src="https://img.shields.io/github/issues-closed-raw/hugoalh/GitHubAction.SendToIFTTT?label=%20&style=flat-square" /></td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/hugoalh/GitHubAction.SendToIFTTT/pulls?q=is%3Apr"><b>Pull Request</b></a></td>
+    <td><img align="center" src="https://img.shields.io/github/issues-pr-raw/hugoalh/GitHubAction.SendToIFTTT?label=%20&style=flat-square" /> : <img align="center" src="https://img.shields.io/github/issues-pr-closed-raw/hugoalh/GitHubAction.SendToIFTTT?label=%20&style=flat-square" /></td>
+  </tr>
+  <tr>
+    <td><b>Code Quality</b></td>
+    <td>
+      <a href="https://www.codefactor.io/repository/github/hugoalh/githubaction.sendtoifttt"><img align="center" alt="CodeFactor Grade" src="https://img.shields.io/codefactor/grade/github/hugoalh/GitHubAction.SendToIFTTT?logo=codefactor&logoColor=ffffff&style=flat-square" /></a>
+      <a href="https://lgtm.com/projects/g/hugoalh/GitHubAction.SendToIFTTT/alerts"><img align="center" alt="LGTM Alert" src="https://img.shields.io/lgtm/alerts/g/hugoalh/GitHubAction.SendToIFTTT?label=%20&logo=lgtm&logoColor=ffffff&style=flat-square" /></a>
+      <a href="https://lgtm.com/projects/g/hugoalh/GitHubAction.SendToIFTTT/context:javascript"><img align="center" alt="LGTM Grade" src="https://img.shields.io/lgtm/grade/javascript/g/hugoalh/GitHubAction.SendToIFTTT?logo=lgtm&logoColor=ffffff&style=flat-square" /></a>
+    </td>
+  </tr>
+</table>
 
 ## 📜 Description
 
-An action to send data to IFTTT applet via webhook, support variables.
+### 🌟 Feature
+
+- Simple setup.
+- Support variables to create dynamic/rich content.
 
 ## 🛠 Configuration
 
@@ -43,7 +77,7 @@ Any
 - **`webhook_key`:** `<string.secret>` IFTTT webhook key.
   > To obtain it, click `Menu` > `My Services` > `Webhooks` > `Settings`, your key is at `Account Info` > `URL` and after `https://maker.ifttt.com/use/`.
   > 
-  > ![](https://i.imgur.com/ihnqN5B.png)
+  > <img align="center" src="https://i.imgur.com/ihnqN5B.png" />
   > 
   > To regenerate it, click `Edit`.
 - **`variable_list_external` \[Optional\]:** `<object.json>` External variable list that will use in the data. Can import from other actions' output.
