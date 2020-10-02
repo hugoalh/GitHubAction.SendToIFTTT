@@ -1,7 +1,7 @@
 /*==================
 [GitHub Action] Send To IFTTT
 	Language:
-		NodeJS 14
+		NodeJS/12.0.0
 ==================*/
 const advancedDetermine = require("@hugoalh/advanced-determine");
 const githubAction = {
@@ -10,7 +10,7 @@ const githubAction = {
 };
 const https = require("https");
 const jsonFlatten = require("flat").flatten;
-let headerUserAgent = `NodeJS/${process.version.replace(/^v/giu, "")} GitHubAction.SendToIFTTT(@hugoalh)/2.0.1`;
+let headerUserAgent = `NodeJS/${process.version.replace(/^v/giu, "")} GitHubAction.SendToIFTTT(@hugoalh)/2.0.2`;
 let inputCannotVariable = {
 	variableJoin: githubAction.core.getInput("variable_join"),
 	variablePrefix: githubAction.core.getInput("variable_prefix"),

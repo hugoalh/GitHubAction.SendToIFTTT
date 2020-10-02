@@ -1,7 +1,7 @@
 /*==================
 [GitHub Action] Send To IFTTT - Setup
 	Language:
-		NodeJS 14
+		NodeJS/12.0.0
 ==================*/
 const childProcess = require("child_process");
 childProcess.execSync(
