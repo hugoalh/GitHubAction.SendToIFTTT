@@ -3,26 +3,26 @@
 	Language:
 		NodeJS/12.0.0
 ==================*/
-const advancedDetermine = require("@hugoalh/advanced-determine");
-const githubAction = {
-	core: require("@actions/core"),
-	github: require("@actions/github")
-};
-const https = require("https");
-const jsonFlatten = require("flat").flatten;
-let headerUserAgent = `NodeJS/${process.version.replace(/^v/giu, "")} GitHubAction.SendToIFTTT(@hugoalh)/2.0.2`;
-let inputCannotVariable = {
-	variableJoin: githubAction.core.getInput("variable_join"),
-	variablePrefix: githubAction.core.getInput("variable_prefix"),
-	variableSuffix: githubAction.core.getInput("variable_suffix"),
-	webhookKey: githubAction.core.getInput("webhook_key")
-};
-let inputCanVariable = {
-	value1: githubAction.core.getInput("value1"),
-	value2: githubAction.core.getInput("value2"),
-	value3: githubAction.core.getInput("value3"),
-	webhookEventName: githubAction.core.getInput("webhook_eventname")
-};
+const advancedDetermine = require("@hugoalh/advanced-determine"),
+	githubAction = {
+		core: require("@actions/core"),
+		github: require("@actions/github")
+	},
+	https = require("https"),
+	jsonFlatten = require("flat").flatten;
+let headerUserAgent = `NodeJS/${process.version.replace(/^v/giu, "")} GitHubAction.SendToIFTTT(@hugoalh)/2.0.3`,
+	inputCannotVariable = {
+		variableJoin: githubAction.core.getInput("variable_join"),
+		variablePrefix: githubAction.core.getInput("variable_prefix"),
+		variableSuffix: githubAction.core.getInput("variable_suffix"),
+		webhookKey: githubAction.core.getInput("webhook_key")
+	},
+	inputCanVariable = {
+		value1: githubAction.core.getInput("value1"),
+		value2: githubAction.core.getInput("value2"),
+		value3: githubAction.core.getInput("value3"),
+		webhookEventName: githubAction.core.getInput("webhook_eventname")
+	};
 if (advancedDetermine.isString(inputCannotVariable.variableJoin) !== true) {
 	throw new TypeError(`Argument "variable_join" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 };
@@ -38,8 +38,8 @@ if (advancedDetermine.isString(inputCanVariable.webhookEventName) !== true) {
 if (advancedDetermine.isString(inputCannotVariable.webhookKey) !== true) {
 	throw new TypeError(`Argument "webhook_key" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 };
-let inputVariableListPayload = githubAction.github.context.payload;
-let inputVariableListExternal = githubAction.core.getInput(`variable_list_external`);
+let inputVariableListPayload = githubAction.github.context.payload,
+	inputVariableListExternal = githubAction.core.getInput(`variable_list_external`);
 switch (advancedDetermine.isString(inputVariableListExternal)) {
 	case false:
 		throw new TypeError(`Argument "variable_list_external" must be type of object JSON! ([GitHub Action] Send To IFTTT)`);
