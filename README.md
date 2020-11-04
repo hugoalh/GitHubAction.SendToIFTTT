@@ -11,7 +11,7 @@
   <img align="center" alt="GitHub Fork" src="https://img.shields.io/github/forks/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square" />
 </details>
 
-A GitHub action to send data to IFTTT applet via webhook, support variables.
+A GitHub action to send data to IFTTT applet via webhook.
 
 <table>
   <tr>

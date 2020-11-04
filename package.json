@@ -1,7 +1,7 @@
 {
 	"name": "githubaction.sendtoifttt",
 	"version": "2.1.0-rc.1",
-	"description": "A GitHub action to send data to IFTTT applet via webhook, support variables.",
+	"description": "A GitHub action to send data to IFTTT applet via webhook.",
 	"keywords": [
 		"github-action",
 		"send",
