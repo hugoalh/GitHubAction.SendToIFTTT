@@ -76,7 +76,7 @@ variableSystem.list.payload = jsonFlatten(
 		delimiter: variableSystem.join
 	}
 );
-githubAction.core.debug(`Replace variable to data. ([GitHub Action] Send To IFTTT)`);
+githubAction.core.debug(`Replace variable in the data. ([GitHub Action] Send To IFTTT)`);
 Object.keys(variableSystem.list.payload).forEach((key) => {
 	Object.keys(input).forEach((element) => {
 		input[element] = input[element].replace(
@@ -119,9 +119,9 @@ nodeFetch(
 	}
 ).catch((error) => {
 	throw error;
-}).then((result) => {
-	if (Math.floor(Number(result.status) / 100) !== 2) {
-		throw new Error(`Status Code: ${result.status} ([GitHub Action] Send To IFTTT)`);
+}).then((response) => {
+	if (Math.floor(Number(response.status) / 100) !== 2) {
+		throw new Error(`Status Code: ${response.status} ([GitHub Action] Send To IFTTT)`);
 	};
-	githubAction.core.debug(`Status Code: ${result.status} ([GitHub Action] Send To IFTTT)`);
+	githubAction.core.debug(`Status Code: ${response.status} ([GitHub Action] Send To IFTTT)`);
 });
