@@ -84,7 +84,7 @@ Any
   </tr>
   <tr>
     <td><code>webhook_eventname</code></td>
-    <td><code>string</code><br />[R][V]</td>
+    <td><code>string</code><br />[R] [V]</td>
     <td>IFTTT webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower case to prevent issue.</td>
   </tr>
   <tr>
