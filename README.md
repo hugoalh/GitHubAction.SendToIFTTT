@@ -72,29 +72,73 @@ Any
 
 ### 📥 Input
 
-#### Not Support Variable
+<table>
+  <tr>
+    <td><b>Argument</b></td>
+    <td>
+      <b>Type</b><br />
+      [R] Require<br />
+      [V] Variable
+    </td>
+    <td><b>Description</b></td>
+  </tr>
+  <tr>
+    <td><code>webhook_eventname</code></td>
+    <td><code>string</code><br />[R][V]</td>
+    <td>IFTTT webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower case to prevent issue.</td>
+  </tr>
+  <tr>
+    <td><code>webhook_key</code></td>
+    <td><code>string.secret</code><br />[R]</td>
+    <td>
+      IFTTT webhook key.<br />
+      <blockquote>
+        To obtain it, click <code>Menu</code> > <code>My Services</code> > <code>Webhooks</code> > <code>Settings</code>, your key is at <code>Account Info</code> > <code>URL</code> and after <code>https://maker.ifttt.com/use/</code>.<br />
+        To regenerate it, click <code>Edit</code>.<br />
+        <img align="center" src="https://i.imgur.com/ihnqN5B.png" />
+      </blockquote>
+    </td>
+  </tr>
+  <tr>
+    <td><code>variable_join</code></td>
+    <td><code>string = "_"</code></td>
+    <td>Variable join if the variable list has depth.</td>
+  </tr>
+  <tr>
+    <td><code>variable_list_external</code></td>
+    <td><code>object.json</code></td>
+    <td>External variable list that will use in the data. Can import from other actions' output.</td>
+  </tr>
+  <tr>
+    <td><code>variable_prefix</code></td>
+    <td><code>string = "%"</code></td>
+    <td>Variable prefix.</td>
+  </tr>
+  <tr>
+    <td><code>variable_suffix</code></td>
+    <td><code>string = "%"</code></td>
+    <td>Variable suffix.</td>
+  </tr>
+  <tr>
+    <td><code>value1</code></td>
+    <td><code>string</code><br />[V]</td>
+    <td>IFTTT default ingredient namespace.</td>
+  </tr>
+  <tr>
+    <td><code>value2</code></td>
+    <td><code>string</code><br />[V]</td>
+    <td>IFTTT default ingredient namespace.</td>
+  </tr>
+  <tr>
+    <td><code>value3</code></td>
+    <td><code>string</code><br />[V]</td>
+    <td>IFTTT default ingredient namespace.</td>
+  </tr>
+</table>
 
-- **`webhook_key`:** `<string.secret>` IFTTT webhook key.
-  > To obtain it, click `Menu` > `My Services` > `Webhooks` > `Settings`, your key is at `Account Info` > `URL` and after `https://maker.ifttt.com/use/`.
-  > 
-  > <img align="center" src="https://i.imgur.com/ihnqN5B.png" />
-  > 
-  > To regenerate it, click `Edit`.
-- **`variable_join` \[Optional\]:** `<string = "_">` Variable join if the variable list has depth.
-- **`variable_list_external` \[Optional\]:** `<object.json>` External variable list that will use in the data. Can import from other actions' output.
-- **`variable_prefix` \[Optional\]:** `<string = "%">` Variable prefix.
-- **`variable_suffix` \[Optional\]:** `<string = "%">` Variable suffix.
+To use GitHub Action context variable list, use placeholder `"${{github.event.<namespace>}}"` in the workflow file (parse by GitHub Action), or use placeholder `"<variable_prefix>payload<variable_join><namespace><variable_suffix>"` in the workflow file which marked support variable (parse by this action).
 
-#### Support Variable
-
-- **`webhook_eventname`:** `<string>` IFTTT webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower-case to prevent issue.
-- **`value1` \[Optional\]:** `<string>` IFTTT default ingredient namespace.
-- **`value2` \[Optional\]:** `<string>` IFTTT default ingredient namespace.
-- **`value3` \[Optional\]:** `<string>` IFTTT default ingredient namespace.
-
-To use GitHub Action context variable list, use placeholder `"${{github.event.<namespace>}}"` in the workflow file (parse by GitHub Action), or use placeholder `"<variable_prefix>payload<variable_join><namespace><variable_suffix>"` in the workflow file which marked "Support Variable" (parse by this action).
-
-To use external variable list, use placeholder `"<variable_prefix>external<variable_join><namespace><variable_suffix>"` in the workflow file which marked "Support Variable" (parse by this action).
+To use external variable list, use placeholder `"<variable_prefix>external<variable_join><namespace><variable_suffix>"` in the workflow file which marked support variable (parse by this action).
 
 ### 📤 Output
 
