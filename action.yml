@@ -8,15 +8,10 @@ inputs:
   webhook_key:
     description: "{string.secret} IFTTT webhook key."
     required: true
-  value1:
-    description: "{string} IFTTT default ingredient namespace."
+  variable_join:
+    description: "{string} Variable join if the variable list has depth."
     required: false
-  value2:
-    description: "{string} IFTTT default ingredient namespace."
-    required: false
-  value3:
-    description: "{string} IFTTT default ingredient namespace."
-    required: false
+    default: "_"
   variable_list_external:
     description: "{object.json} External variable list that will use in the data."
     required: false
@@ -28,10 +23,15 @@ inputs:
     description: "{string} Variable suffix."
     required: false
     default: "%"
-  variable_join:
-    description: "{string} Variable join if the variable list has depth."
+  value1:
+    description: "{string} IFTTT default ingredient namespace."
     required: false
-    default: "_"
+  value2:
+    description: "{string} IFTTT default ingredient namespace."
+    required: false
+  value3:
+    description: "{string} IFTTT default ingredient namespace."
+    required: false
 runs:
   using: "node12"
   pre: "setup.js"

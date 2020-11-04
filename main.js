@@ -1,120 +1,127 @@
 /*==================
 [GitHub Action] Send To IFTTT
 	Language:
-		NodeJS/12.0.0
+		NodeJS/12.13.0
 ==================*/
 const advancedDetermine = require("@hugoalh/advanced-determine"),
 	githubAction = {
 		core: require("@actions/core"),
 		github: require("@actions/github")
 	},
-	https = require("https"),
-	jsonFlatten = require("flat").flatten;
-let headerUserAgent = `NodeJS/${process.version.replace(/^v/giu, "")} GitHubAction.SendToIFTTT(@hugoalh)/2.0.3`,
-	inputCannotVariable = {
-		variableJoin: githubAction.core.getInput("variable_join"),
-		variablePrefix: githubAction.core.getInput("variable_prefix"),
-		variableSuffix: githubAction.core.getInput("variable_suffix"),
-		webhookKey: githubAction.core.getInput("webhook_key")
-	},
-	inputCanVariable = {
+	jsonFlatten = require("flat").flatten,
+	nodeFetch = require("node-fetch");
+githubAction.core.debug(`Import workflow argument. ([GitHub Action] Send To IFTTT)`);
+let input = {
 		value1: githubAction.core.getInput("value1"),
 		value2: githubAction.core.getInput("value2"),
-		value3: githubAction.core.getInput("value3"),
-		webhookEventName: githubAction.core.getInput("webhook_eventname")
+		value3: githubAction.core.getInput("value3")
+	},
+	variableSystem = {
+		join: githubAction.core.getInput("variable_join"),
+		prefix: githubAction.core.getInput("variable_prefix"),
+		suffix: githubAction.core.getInput("variable_suffix")
+	},
+	webhook = {
+		eventName: githubAction.core.getInput("webhook_eventname"),
+		key: githubAction.core.getInput("webhook_key")
 	};
-if (advancedDetermine.isString(inputCannotVariable.variableJoin) !== true) {
+githubAction.core.debug(`Analysis workflow argument. ([GitHub Action] Send To IFTTT)`);
+if (advancedDetermine.isString(variableSystem.join) !== true) {
 	throw new TypeError(`Argument "variable_join" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 };
-if (advancedDetermine.isString(inputCannotVariable.variablePrefix) !== true) {
+if (advancedDetermine.isString(variableSystem.prefix) !== true) {
 	throw new TypeError(`Argument "variable_prefix" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 };
-if (advancedDetermine.isString(inputCannotVariable.variableSuffix) !== true) {
+if (advancedDetermine.isString(variableSystem.suffix) !== true) {
 	throw new TypeError(`Argument "variable_suffix" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 };
-if (advancedDetermine.isString(inputCanVariable.webhookEventName) !== true) {
+if (advancedDetermine.isString(webhook.eventName) !== true) {
 	throw new TypeError(`Argument "webhook_eventname" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 };
-if (advancedDetermine.isString(inputCannotVariable.webhookKey) !== true) {
+if (advancedDetermine.isString(webhook.key) !== true) {
 	throw new TypeError(`Argument "webhook_key" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 };
-let inputVariableListPayload = githubAction.github.context.payload,
-	inputVariableListExternal = githubAction.core.getInput(`variable_list_external`);
-switch (advancedDetermine.isString(inputVariableListExternal)) {
+githubAction.core.debug(`Import variable list. ([GitHub Action] Send To IFTTT)`);
+variableSystem.list = {
+	external: githubAction.core.getInput(`variable_list_external`),
+	payload: githubAction.github.context.payload
+};
+githubAction.core.debug(`Analysis external variable list. ([GitHub Action] Send To IFTTT)`);
+switch (advancedDetermine.isString(variableSystem.list.external)) {
 	case false:
 		throw new TypeError(`Argument "variable_list_external" must be type of object JSON! ([GitHub Action] Send To IFTTT)`);
-		break;
 	case null:
-		githubAction.core.info(`External variable list is null. ([GitHub Action] Send To IFTTT)`);
-		inputVariableListExternal = {};
+		githubAction.core.info(`External variable list is empty. ([GitHub Action] Send To IFTTT)`);
+		variableSystem.list.external = {};
 		break;
 	case true:
-		if (advancedDetermine.isStringifyJSON(inputVariableListExternal) === false) {
+		if (advancedDetermine.isStringifyJSON(variableSystem.list.external) === false) {
 			throw new TypeError(`Argument "variable_list_external" must be type of object JSON! ([GitHub Action] Send To IFTTT)`);
 		};
-		inputVariableListExternal = JSON.parse(inputVariableListExternal);
+		variableSystem.list.external = JSON.parse(variableSystem.list.external);
 		break;
-	// No default case!
+	default:
+		throw new Error();
 };
-inputVariableListPayload = jsonFlatten(
-	inputVariableListPayload,
+githubAction.core.debug(`Tokenize variable list. ([GitHub Action] Send To IFTTT)`);
+variableSystem.list.external = jsonFlatten(
+	variableSystem.list.external,
 	{
-		delimiter: inputCannotVariable.variableJoin
+		delimiter: variableSystem.join
 	}
 );
-inputVariableListExternal = jsonFlatten(
-	inputVariableListExternal,
+variableSystem.list.payload = jsonFlatten(
+	variableSystem.list.payload,
 	{
-		delimiter: inputCannotVariable.variableJoin
+		delimiter: variableSystem.join
 	}
 );
-Object.keys(inputVariableListPayload).forEach((key) => {
-	Object.keys(inputCanVariable).forEach((element) => {
-		inputCanVariable[element] = inputCanVariable[element].replace(
-			new RegExp(`${inputCannotVariable.variablePrefix}payload${inputCannotVariable.variableJoin}${key}${inputCannotVariable.variableSuffix}`, "gu"),
-			inputVariableListPayload[key]
+githubAction.core.debug(`Replace variable to data. ([GitHub Action] Send To IFTTT)`);
+Object.keys(variableSystem.list.payload).forEach((key) => {
+	Object.keys(input).forEach((element) => {
+		input[element] = input[element].replace(
+			new RegExp(`${variableSystem.prefix}payload${variableSystem.join}${key}${variableSystem.suffix}`, "gu"),
+			variableSystem.list.payload[key]
 		);
 	});
+	webhook.eventName = webhook.eventName.replace(
+		new RegExp(`${variableSystem.prefix}payload${variableSystem.join}${key}${variableSystem.suffix}`, "gu"),
+		variableSystem.list.payload[key]
+	);
 });
-Object.keys(inputVariableListExternal).forEach((key) => {
-	Object.keys(inputCanVariable).forEach((element) => {
-		inputCanVariable[element] = inputCanVariable[element].replace(
-			new RegExp(`${inputCannotVariable.variablePrefix}external${inputCannotVariable.variableJoin}${key}${inputCannotVariable.variableSuffix}`, "gu"),
-			inputVariableListExternal[key]
+Object.keys(variableSystem.list.external).forEach((key) => {
+	Object.keys(input).forEach((element) => {
+		input[element] = input[element].replace(
+			new RegExp(`${variableSystem.prefix}external${variableSystem.join}${key}${variableSystem.suffix}`, "gu"),
+			variableSystem.list.payload[key]
 		);
 	});
+	webhook.eventName = webhook.eventName.replace(
+		new RegExp(`${variableSystem.prefix}external${variableSystem.join}${key}${variableSystem.suffix}`, "gu"),
+		variableSystem.list.payload[key]
+	);
 });
-const requestPayload = JSON.stringify({
-	"value1": inputCanVariable.value1,
-	"value2": inputCanVariable.value2,
-	"value3": inputCanVariable.value3
-});
-const requestNode = https.request(
-	`https://maker.ifttt.com/trigger/${inputCanVariable.webhookEventName}/with/key/${inputCannotVariable.webhookKey}`,
+githubAction.core.debug(`Export request payload. ([GitHub Action] Send To IFTTT)`);
+let requestPayload = JSON.stringify(input);
+githubAction.core.debug(`Send network request to IFTTT. ([GitHub Action] Send To IFTTT)`);
+nodeFetch(
+	`https://maker.ifttt.com/trigger/${webhook.eventName}/with/key/${webhook.key}`,
 	{
-		port: 443,
-		method: "POST",
+		body: requestPayload,
+		follow: 5,
 		headers: {
 			"Content-Type": "application/json",
 			"Content-Length": requestPayload.length,
-			"User-Agent": headerUserAgent
-		}
-	},
-	(result) => {
-		console.log(`Status Code: ${result.statusCode}`);
-		result.on(
-			"data",
-			(delta) => {
-				process.stdout.write(delta);
-			}
-		);
+			"User-Agent": `NodeJS/${process.version.replace(/^v/giu, "")} node-fetch/2.6.1 GitHubAction.SendToIFTTT(@hugoalh)/2.1.0`
+		},
+		method: "POST",
+		redirect: "follow"
 	}
-);
-requestNode.write(requestPayload);
-requestNode.on(
-	"error",
-	(error) => {
-		throw new Error(error);
-	}
-);
-requestNode.end();
+).catch((error) => {
+	throw error;
+}).then((result) => {
+	if (Math.floor(Number(result.status) / 100) !== 2) {
+		throw new Error(`Status Code: ${result.status} ([GitHub Action] Send To IFTTT)`);
+	};
+	githubAction.core.debug(`Status Code: ${result.status} ([GitHub Action] Send To IFTTT)`);
+});

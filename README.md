@@ -67,8 +67,8 @@ Any
 
 #### Software
 
-- NodeJS (>= v12)
-- NPM (>= v6)
+- NodeJS (>= v12.13)
+- NPM (>= v6.12)
 
 ### 📥 Input
 
@@ -80,10 +80,10 @@ Any
   > <img align="center" src="https://i.imgur.com/ihnqN5B.png" />
   > 
   > To regenerate it, click `Edit`.
+- **`variable_join` \[Optional\]:** `<string = "_">` Variable join if the variable list has depth.
 - **`variable_list_external` \[Optional\]:** `<object.json>` External variable list that will use in the data. Can import from other actions' output.
 - **`variable_prefix` \[Optional\]:** `<string = "%">` Variable prefix.
 - **`variable_suffix` \[Optional\]:** `<string = "%">` Variable suffix.
-- **`variable_join` \[Optional\]:** `<string = "_">` Variable join if the variable list has depth.
 
 #### Support Variable
 
@@ -102,7 +102,7 @@ To use external variable list, use placeholder `"<variable_prefix>external<varia
 
 ### Example
 
-```yaml
+```yml
 jobs:
   send-to-ifttt:
     name: "Send To IFTTT"
@@ -113,16 +113,17 @@ jobs:
         with:
           webhook_eventname: "say_hello"
           webhook_key: "${{secrets.IFTTT_WEBHOOK_KEY}}"
-          value1: "Hello, world!"
-          # value2:
-          # value3:
+          variable_join: "."
           # variable_list_external:
           variable_prefix: "%"
           variable_suffix: "%"
-          variable_join: "."
+          value1: "Hello, world!"
+          # value2:
+          # value3:
 ```
 
 ### 📚 Guide
 
 - [GitHub: Webhook event payloads](https://docs.github.com/en/developers/webhooks-and-events/webhook-events-and-payloads)
 - [GitHub Actions: Creating and storing encrypted secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
+- [GitHub Actions: Enable debug logs](https://github.com/actions/toolkit/blob/main/docs/action-debugging.md#step-debug-logs)
