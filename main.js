@@ -112,7 +112,7 @@ nodeFetch(
 		headers: {
 			"Content-Type": "application/json",
 			"Content-Length": requestPayload.length,
-			"User-Agent": `NodeJS/${process.version.replace(/^v/giu, "")} node-fetch/2.6.1 GitHubAction.SendToIFTTT(@hugoalh)/2.1.0`
+			"User-Agent": `NodeJS/${process.version.replace(/^v/giu, "")} node-fetch/2.6.1 GitHubAction.SendToIFTTT(@hugoalh)/3.0.0`
 		},
 		method: "POST",
 		redirect: "follow"
