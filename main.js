@@ -101,7 +101,7 @@ Object.keys(variableSystem.list.external).forEach((key) => {
 		variableSystem.list.payload[key]
 	);
 });
-githubAction.core.debug(`Export request payload. ([GitHub Action] Send To IFTTT)`);
+githubAction.core.debug(`Export payload. ([GitHub Action] Send To IFTTT)`);
 let requestPayload = JSON.stringify(input);
 githubAction.core.debug(`Send network request to IFTTT. ([GitHub Action] Send To IFTTT)`);
 nodeFetch(
