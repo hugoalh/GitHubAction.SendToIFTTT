@@ -12,10 +12,10 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 	nodeFetch = require("node-fetch");
 githubAction.core.info(`Import workflow argument. ([GitHub Action] Send To IFTTT)`);
 let input = {
-		value1: githubAction.core.getInput("value1"),
-		value2: githubAction.core.getInput("value2"),
-		value3: githubAction.core.getInput("value3")
-	},
+	value1: githubAction.core.getInput("value1"),
+	value2: githubAction.core.getInput("value2"),
+	value3: githubAction.core.getInput("value3")
+},
 	logMoreDetail = githubAction.core.isDebug(),
 	variableSystem = {
 		join: githubAction.core.getInput("variable_join"),
@@ -129,9 +129,15 @@ nodeFetch(
 		githubAction.core.warning(`Receive status code ${response.status}! May cause error in the beyond. ([GitHub Action] Send To IFTTT)`);
 	};
 	if (response.ok === false) {
-		throw new Error(`${response.status} ${response.text} ([GitHub Action] Send To IFTTT)`);
+		(async () => {
+			let text = await response.text();
+			throw new Error(`${response.status} ${text} ([GitHub Action] Send To IFTTT)`);
+		})();
 	};
 	if (logMoreDetail === true) {
-		githubAction.core.info(`${response.status} ${response.text} ([GitHub Action] Send To IFTTT)`);
+		(async () => {
+			let text = await response.text();
+			githubAction.core.info(`${response.status} ${text} ([GitHub Action] Send To IFTTT)`);
+		})();
 	};
 });
