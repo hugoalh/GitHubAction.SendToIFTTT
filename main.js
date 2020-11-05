@@ -109,7 +109,7 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 		githubAction.core.info(`Network Request Payload: ${requestPayload}  ([GitHub Action] Send To IFTTT)`);
 	};
 	githubAction.core.info(`Send network request to IFTTT. ([GitHub Action] Send To IFTTT)`);
-	let response = nodeFetch(
+	let response = await nodeFetch(
 		`https://maker.ifttt.com/trigger/${webhook.eventName}/with/key/${webhook.key}`,
 		{
 			body: requestPayload,
