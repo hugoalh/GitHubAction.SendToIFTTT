@@ -167,7 +167,7 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - id: "send-to-ifttt-main"
-        uses: "hugoalh/GitHubAction.SendToIFTTT@v3.0.0"
+        uses: "hugoalh/GitHubAction.SendToIFTTT@v2.0.0"
         with:
           webhook_eventname: "say_hello"
           webhook_key: "${{secrets.IFTTT_WEBHOOK_KEY}}"
