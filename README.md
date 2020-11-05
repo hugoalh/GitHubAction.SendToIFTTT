@@ -77,19 +77,33 @@ Any
     <td><b>Argument</b></td>
     <td>
       <b>Type</b><br />
-      [R] Require<br />
-      [V] Support Variable
+      <blockquote>
+        <table>
+          <tr>
+            <td align="center"><b>Legend</b></td>
+            <td><b>Description</b></td>
+          </tr>
+          <tr>
+            <td align="center">✔</td>
+            <td>Require</td>
+          </tr>
+          <tr>
+            <td align="center">[V]</td>
+            <td>Support variable</td>
+          </tr>
+        </table>
+      </blockquote>
     </td>
     <td><b>Description</b></td>
   </tr>
   <tr>
     <td><code>webhook_eventname</code></td>
-    <td><code>string</code><br />[R] [V]</td>
+    <td><code>string</code><br />✔ [V]</td>
     <td>IFTTT webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower case to prevent issue.</td>
   </tr>
   <tr>
     <td><code>webhook_key</code></td>
-    <td><code>string.secret</code><br />[R]</td>
+    <td><code>string.secret</code><br />✔</td>
     <td>
       IFTTT webhook key.<br />
       <blockquote>
