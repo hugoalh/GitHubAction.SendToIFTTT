@@ -17,7 +17,6 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 			value2: githubAction.core.getInput("value2"),
 			value3: githubAction.core.getInput("value3")
 		},
-		logMoreDetail = githubAction.core.isDebug(),
 		variableSystem = {
 			join: githubAction.core.getInput("variable_join"),
 			prefix: githubAction.core.getInput("variable_prefix"),
@@ -105,9 +104,7 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 	});
 	githubAction.core.info(`Generate network request payload. ([GitHub Action] Send To IFTTT)`);
 	let requestPayload = JSON.stringify(input);
-	if (logMoreDetail === true) {
-		githubAction.core.info(`Network Request Payload: ${requestPayload}  ([GitHub Action] Send To IFTTT)`);
-	};
+	githubAction.core.debug(`Network Request Payload: ${requestPayload}  ([GitHub Action] Send To IFTTT)`);
 	githubAction.core.info(`Send network request to IFTTT. ([GitHub Action] Send To IFTTT)`);
 	let response = await nodeFetch(
 		`https://maker.ifttt.com/trigger/${webhook.eventName}/with/key/${webhook.key}`,
@@ -129,16 +126,10 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 	if (response.status !== 200) {
 		githubAction.core.warning(`Receive status code ${response.status}! May cause error in the beyond. ([GitHub Action] Send To IFTTT)`);
 	};
-	if (response.ok === false) {
-		(async () => {
-			let text = await response.text();
-			throw new Error(`${response.status} ${text} ([GitHub Action] Send To IFTTT)`);
-		})();
-	};
-	if (logMoreDetail === true) {
-		(async () => {
-			let text = await response.text();
-			githubAction.core.info(`${response.status} ${text} ([GitHub Action] Send To IFTTT)`);
-		})();
+	let responseText = await response.text();
+	if (response.ok === true) {
+		githubAction.core.debug(`${response.status} ${responseText} ([GitHub Action] Send To IFTTT)`);
+	} else {
+		throw new Error(`${response.status} ${responseText} ([GitHub Action] Send To IFTTT)`);
 	};
 })();
