@@ -78,19 +78,23 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 		}
 	);
 	githubAction.core.info(`Replace variable in the data. ([GitHub Action] Send To IFTTT)`);
-	Object.keys(variableSystem.list.payload).forEach((key) => {
-		let keyPattern = new RegExp(`${variableSystem.prefix}payload${variableSystem.join}${key}${variableSystem.suffix}`, "gu");
+	function variableReplace(variableKey, variableValue) {
 		Object.keys(input).forEach((element) => {
-			input[element] = input[element].replace(keyPattern, variableSystem.list.payload[key]);
+			input[element] = input[element].replace(variableKey, variableValue);
 		});
-		webhook.eventName = webhook.eventName.replace(keyPattern, variableSystem.list.payload[key]);
+		webhook.eventName = webhook.eventName.replace(variableKey, variableValue);
+	};
+	Object.keys(variableSystem.list.payload).forEach((keyPayload) => {
+		variableReplace(
+			new RegExp(`${variableSystem.prefix}payload${variableSystem.join}${keyPayload}${variableSystem.suffix}`, "gu"),
+			variableSystem.list.payload[keyPayload]
+		);
 	});
-	Object.keys(variableSystem.list.external).forEach((key) => {
-		let keyPattern = new RegExp(`${variableSystem.prefix}external${variableSystem.join}${key}${variableSystem.suffix}`, "gu");
-		Object.keys(input).forEach((element) => {
-			input[element] = input[element].replace(keyPattern, variableSystem.list.payload[key]);
-		});
-		webhook.eventName = webhook.eventName.replace(keyPattern, variableSystem.list.payload[key]);
+	Object.keys(variableSystem.list.external).forEach((keyExternal) => {
+		variableReplace(
+			new RegExp(`${variableSystem.prefix}external${variableSystem.join}${keyExternal}${variableSystem.suffix}`, "gu"),
+			variableSystem.list.external[keyExternal]
+		);
 	});
 	githubAction.core.info(`Generate network request payload. ([GitHub Action] Send To IFTTT)`);
 	let requestPayload = JSON.stringify(input);
