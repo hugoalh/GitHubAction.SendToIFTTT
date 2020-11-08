@@ -113,9 +113,7 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 			method: "POST",
 			redirect: "follow"
 		}
-	).catch((error) => {
-		throw error;
-	});
+	);
 	githubAction.core.info(`Receive network response from IFTTT. ([GitHub Action] Send To IFTTT)`);
 	if (response.status !== 200) {
 		githubAction.core.warning(`Receive status code ${response.status}! May cause error in the beyond. ([GitHub Action] Send To IFTTT)`);
@@ -127,5 +125,6 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 		throw new Error(`${response.status} ${responseText} ([GitHub Action] Send To IFTTT)`);
 	};
 })().catch((error) => {
-	throw error;
+	githubAction.core.error(error);
+	process.exit(1);
 });
