@@ -27,19 +27,19 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 			key: githubAction.core.getInput("webhook_key")
 		};
 	githubAction.core.info(`Analysis workflow argument. ([GitHub Action] Send To IFTTT)`);
-	if (advancedDetermine.isString(variableSystem.join) !== true) {
+	if (advancedDetermine.isStringSingleLine(variableSystem.join, { allowWhitespace: false }) !== true) {
 		throw new TypeError(`Argument "variable_join" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 	};
-	if (advancedDetermine.isString(variableSystem.prefix) !== true) {
+	if (advancedDetermine.isStringSingleLine(variableSystem.prefix, { allowWhitespace: false }) !== true) {
 		throw new TypeError(`Argument "variable_prefix" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 	};
-	if (advancedDetermine.isString(variableSystem.suffix) !== true) {
+	if (advancedDetermine.isStringSingleLine(variableSystem.suffix, { allowWhitespace: false }) !== true) {
 		throw new TypeError(`Argument "variable_suffix" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 	};
-	if (advancedDetermine.isString(webhook.eventName) !== true) {
+	if (advancedDetermine.isStringSingleLine(webhook.eventName, { allowWhitespace: false }) !== true) {
 		throw new TypeError(`Argument "webhook_eventname" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 	};
-	if (advancedDetermine.isString(webhook.key) !== true) {
+	if (advancedDetermine.isStringSingleLine(webhook.key, { allowWhitespace: false }) !== true) {
 		throw new TypeError(`Argument "webhook_key" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 	};
 	githubAction.core.info(`Import variable list. ([GitHub Action] Send To IFTTT)`);
@@ -108,7 +108,7 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 			headers: {
 				"Content-Type": "application/json",
 				"Content-Length": requestPayload.length,
-				"User-Agent": `NodeJS/${process.version.replace(/^v/giu, "")} node-fetch/2.6.1 GitHubAction.SendToIFTTT(@hugoalh)/3.0.0`
+				"User-Agent": `NodeJS/${process.version.replace(/^v/giu, "")} node-fetch/2.6.1 GitHubAction.SendToIFTTT(@hugoalh)/3.0.1`
 			},
 			method: "POST",
 			redirect: "follow"
