@@ -74,7 +74,7 @@ Any
 
 | **Legend** | **Description** |
 |:---:|:----|
-| \[V\] | Support variable.
+| \[V\] | Support variable. |
 
 To use variable in the supported argument, follow the pattern:
 
