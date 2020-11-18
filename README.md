@@ -80,7 +80,7 @@ To use variable in the supported argument, follow the pattern:
 
 | **Category** | **Workflow File (Parse Via GitHub Machine/Runner)** | **Workflow File (Parse Via Action)** |
 |:---:|:---:|:---:|
-| External |  | `"<variable_prefix>external<variable_join><namespace><variable_suffix>"` |
+| External | *(N/A)* | `"<variable_prefix>external<variable_join><namespace><variable_suffix>"` |
 | GitHub Event Webhook Payload | `"${{github.event.<namespace>}}"` | `"<variable_prefix>payload<variable_join><namespace><variable_suffix>"` |
 
 #### `webhook_eventname`
