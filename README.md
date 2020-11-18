@@ -11,7 +11,7 @@
   <img align="center" alt="GitHub Fork" src="https://img.shields.io/github/forks/hugoalh/GitHubAction.SendToIFTTT?logo=github&logoColor=ffffff&style=flat-square" />
 </details>
 
-A GitHub action to send data to IFTTT applet via webhook.
+A GitHub action to send data to IFTTT webhook applet.
 
 <table>
   <tr>
@@ -55,7 +55,7 @@ A GitHub action to send data to IFTTT applet via webhook.
 ### 🌟 Feature
 
 - Simple setup.
-- Support variables to create dynamic/rich content.
+- Support variable to create dynamic/rich content.
 
 ## 🛠 Configuration
 
@@ -72,87 +72,54 @@ Any
 
 ### 📥 Input
 
-<table>
-  <tr>
-    <td><b>Argument</b></td>
-    <td>
-      <b>Type</b><br />
-      <blockquote>
-        <table>
-          <tr>
-            <td align="center"><b>Legend</b></td>
-            <td><b>Description</b></td>
-          </tr>
-          <tr>
-            <td align="center">✔</td>
-            <td>Require</td>
-          </tr>
-          <tr>
-            <td align="center">[V]</td>
-            <td>Support variable</td>
-          </tr>
-        </table>
-      </blockquote>
-    </td>
-    <td><b>Description</b></td>
-  </tr>
-  <tr>
-    <td><code>webhook_eventname</code></td>
-    <td><code>string</code><br />✔ [V]</td>
-    <td>IFTTT webhook event name, create from applet "Receive A Web Request - Event Name", keep in lower case to prevent issue.</td>
-  </tr>
-  <tr>
-    <td><code>webhook_key</code></td>
-    <td><code>string.secret</code><br />✔</td>
-    <td>
-      IFTTT webhook key.<br />
-      <blockquote>
-        To obtain it, click <code>Menu</code> > <code>My Services</code> > <code>Webhooks</code> > <code>Settings</code>, your key is at <code>Account Info</code> > <code>URL</code> and after <code>https://maker.ifttt.com/use/</code>.<br />
-        To regenerate it, click <code>Edit</code>.<br />
-        <img align="center" src="https://i.imgur.com/ihnqN5B.png" />
-      </blockquote>
-    </td>
-  </tr>
-  <tr>
-    <td><code>variable_join</code></td>
-    <td><code>string = "_"</code></td>
-    <td>Variable join if the variable list has depth.</td>
-  </tr>
-  <tr>
-    <td><code>variable_list_external</code></td>
-    <td><code>object.json</code></td>
-    <td>External variable list that will use in the data. Can import from other actions' output.</td>
-  </tr>
-  <tr>
-    <td><code>variable_prefix</code></td>
-    <td><code>string = "%"</code></td>
-    <td>Variable prefix.</td>
-  </tr>
-  <tr>
-    <td><code>variable_suffix</code></td>
-    <td><code>string = "%"</code></td>
-    <td>Variable suffix.</td>
-  </tr>
-  <tr>
-    <td><code>value1</code></td>
-    <td><code>string</code><br />[V]</td>
-    <td>IFTTT default ingredient namespace.</td>
-  </tr>
-  <tr>
-    <td><code>value2</code></td>
-    <td><code>string</code><br />[V]</td>
-    <td>IFTTT default ingredient namespace.</td>
-  </tr>
-  <tr>
-    <td><code>value3</code></td>
-    <td><code>string</code><br />[V]</td>
-    <td>IFTTT default ingredient namespace.</td>
-  </tr>
-</table>
+| **Legend** | **Description** |
+|:---:|:----|
+| \[V\] | Support variable.
 
-To use GitHub Action context variable list, use placeholder `"${{github.event.<namespace>}}"` in the workflow file (parse by GitHub Action), or use placeholder `"<variable_prefix>payload<variable_join><namespace><variable_suffix>"` in the workflow file which marked support variable (parse by this action).
+To use variable in the supported argument, follow the pattern:
 
-To use external variable list, use placeholder `"<variable_prefix>external<variable_join><namespace><variable_suffix>"` in the workflow file which marked support variable (parse by this action).
+| **Category** | **Workflow File (Parse Via GitHub Machine/Runner)** | **Workflow File (Parse Via Action)** |
+|:---:|:---:|:---:|
+| External |  | `"<variable_prefix>external<variable_join><namespace><variable_suffix>"` |
+| GitHub Event Webhook Payload | `"${{github.event.<namespace>}}"` | `"<variable_prefix>payload<variable_join><namespace><variable_suffix>"` |
+
+#### `webhook_eventname`
+
+**\[V\]** `<string>` IFTTT webhook event name, create from applet "Receive A Web Request - Event Name"; recommended to keep in lower case to prevent issue.
+
+#### `webhook_key`
+
+`<string.secret>` IFTTT webhook key. To obtain it, click "Menu" > "My Services" > "Webhooks" > "Settings", your key is at "Account Info" > "URL" and after `https://maker.ifttt.com/use/`. To regenerate it, click "Edit".
+
+<img align="center" src="https://i.imgur.com/ihnqN5B.png" width="384px"/>
+
+#### `variable_join`
+
+**\[Optional\]** `<string = "_">` Variable join if the variable list has depth.
+
+#### `variable_list_external`
+
+**\[Optional\]** `<object.json>` External variable list that will use in the data. Can import from other actions' output.
+
+#### `variable_prefix`
+
+**\[Optional\]** `<string = "%">` Variable prefix.
+
+#### `variable_suffix`
+
+**\[Optional\]** `<string = "%">` Variable suffix.
+
+#### `value1`
+
+**\[Optional\] \[V\]** `<string>` IFTTT default ingredient namespace.
+
+#### `value2`
+
+**\[Optional\] \[V\]** `<string>` IFTTT default ingredient namespace.
+
+#### `value3`
+
+**\[Optional\] \[V\]** `<string>` IFTTT default ingredient namespace.
 
 ### 📤 Output
 

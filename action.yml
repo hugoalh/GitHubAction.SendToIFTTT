@@ -1,9 +1,9 @@
 name: "Send To IFTTT"
 author: "hugoalh"
-description: "Send data to IFTTT applet via webhook."
+description: "Send data to IFTTT webhook applet."
 inputs:
   webhook_eventname:
-    description: "{string} IFTTT webhook event name."
+    description: "{string.lowerCase} IFTTT webhook event name."
     required: true
   webhook_key:
     description: "{string.secret} IFTTT webhook key."

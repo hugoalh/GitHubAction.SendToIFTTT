@@ -9,7 +9,8 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 		github: require("@actions/github")
 	},
 	jsonFlatten = require("flat").flatten,
-	nodeFetch = require("node-fetch");
+	nodeFetch = require("node-fetch"),
+	regexpEscape = require("escape-string-regexp");
 (async () => {
 	githubAction.core.info(`Import workflow argument. ([GitHub Action] Send To IFTTT)`);
 	let input = {
@@ -39,8 +40,17 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 	if (advancedDetermine.isStringSingleLine(webhook.eventName, { allowWhitespace: false }) !== true) {
 		throw new TypeError(`Argument "webhook_eventname" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 	};
+	if (webhook.eventName.search(/\//gu) !== -1) {
+		throw new SyntaxError(`Argument "webhook_eventname"'s value is not match the require pattern! ([GitHub Action] Send To IFTTT)`);
+	};
+	if (advancedDetermine.isStringLowerCase(webhook.eventName) !== true) {
+		githubAction.core.warning(`Argument "webhook_eventname" is recommended to keep in lower case to prevent issue! ([GitHub Action] Send To IFTTT)`);
+	};
 	if (advancedDetermine.isStringSingleLine(webhook.key, { allowWhitespace: false }) !== true) {
 		throw new TypeError(`Argument "webhook_key" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
+	};
+	if (webhook.key.search(/\//gu) !== -1) {
+		throw new SyntaxError(`Argument "webhook_key"'s value is not match the require pattern! ([GitHub Action] Send To IFTTT)`);
 	};
 	githubAction.core.info(`Import variable list. ([GitHub Action] Send To IFTTT)`);
 	variableSystem.list = {
@@ -48,21 +58,23 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 		payload: githubAction.github.context.payload
 	};
 	githubAction.core.info(`Analysis external variable list. ([GitHub Action] Send To IFTTT)`);
-	switch (advancedDetermine.isString(variableSystem.list.external)) {
-		case false:
-			throw new TypeError(`Argument "variable_list_external" must be type of object JSON! ([GitHub Action] Send To IFTTT)`);
-		case null:
-			githubAction.core.info(`External variable list is empty. ([GitHub Action] Send To IFTTT)`);
-			variableSystem.list.external = {};
-			break;
-		case true:
-			if (advancedDetermine.isStringifyJSON(variableSystem.list.external) === false) {
+	if (advancedDetermine.isJSON(variableSystem.list.external) !== true) {
+		switch (advancedDetermine.isString(variableSystem.list.external)) {
+			case false:
 				throw new TypeError(`Argument "variable_list_external" must be type of object JSON! ([GitHub Action] Send To IFTTT)`);
-			};
-			variableSystem.list.external = JSON.parse(variableSystem.list.external);
-			break;
-		default:
-			throw new Error();
+			case null:
+				githubAction.core.info(`External variable list is empty. ([GitHub Action] Send To IFTTT)`);
+				variableSystem.list.external = {};
+				break;
+			case true:
+				if (advancedDetermine.isStringifyJSON(variableSystem.list.external) === false) {
+					throw new TypeError(`Argument "variable_list_external" must be type of object JSON! ([GitHub Action] Send To IFTTT)`);
+				};
+				variableSystem.list.external = JSON.parse(variableSystem.list.external);
+				break;
+			default:
+				throw new Error();
+		};
 	};
 	githubAction.core.info(`Tokenize variable list. ([GitHub Action] Send To IFTTT)`);
 	variableSystem.list.external = jsonFlatten(
@@ -86,13 +98,19 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 	};
 	Object.keys(variableSystem.list.payload).forEach((keyPayload) => {
 		variableReplace(
-			new RegExp(`${variableSystem.prefix}payload${variableSystem.join}${keyPayload}${variableSystem.suffix}`, "gu"),
+			new RegExp(
+				regexpEscape(`${variableSystem.prefix}payload${variableSystem.join}${keyPayload}${variableSystem.suffix}`),
+				"gu"
+			),
 			variableSystem.list.payload[keyPayload]
 		);
 	});
 	Object.keys(variableSystem.list.external).forEach((keyExternal) => {
 		variableReplace(
-			new RegExp(`${variableSystem.prefix}external${variableSystem.join}${keyExternal}${variableSystem.suffix}`, "gu"),
+			new RegExp(
+				regexpEscape(`${variableSystem.prefix}external${variableSystem.join}${keyExternal}${variableSystem.suffix}`),
+				"gu"
+			),
 			variableSystem.list.external[keyExternal]
 		);
 	});
@@ -108,7 +126,7 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 			headers: {
 				"Content-Type": "application/json",
 				"Content-Length": requestPayload.length,
-				"User-Agent": `NodeJS/${process.version.replace(/^v/giu, "")} node-fetch/2.6.1 GitHubAction.SendToIFTTT(@hugoalh)/3.0.1`
+				"User-Agent": `NodeJS/${process.version.replace(/^v/giu, "")} node-fetch/2.6.1 GitHubAction.SendToIFTTT(@hugoalh)/3.1.0`
 			},
 			method: "POST",
 			redirect: "follow"
