@@ -58,7 +58,7 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 		payload: githubAction.github.context.payload
 	};
 	githubAction.core.info(`Analysis external variable list. ([GitHub Action] Send To IFTTT)`);
-	if (advancedDetermine.isJSON(variableSystem.list.external) !== true) {
+	if (advancedDetermine.isJSON(variableSystem.list.external) === false) {
 		switch (advancedDetermine.isString(variableSystem.list.external)) {
 			case false:
 				throw new TypeError(`Argument "variable_list_external" must be type of object JSON! ([GitHub Action] Send To IFTTT)`);
