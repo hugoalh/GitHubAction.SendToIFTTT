@@ -58,23 +58,20 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 		payload: githubAction.github.context.payload
 	};
 	githubAction.core.info(`Analysis external variable list. ([GitHub Action] Send To IFTTT)`);
-	if (advancedDetermine.isJSON(variableSystem.list.external) === false) {
-		switch (advancedDetermine.isString(variableSystem.list.external)) {
-			case false:
+	switch (advancedDetermine.isString(variableSystem.list.external)) {
+		case null:
+			githubAction.core.info(`External variable list is empty. ([GitHub Action] Send To IFTTT)`);
+			variableSystem.list.external = {};
+			break;
+		case true:
+			if (advancedDetermine.isStringifyJSON(variableSystem.list.external) === false) {
 				throw new TypeError(`Argument "variable_list_external" must be type of object JSON! ([GitHub Action] Send To IFTTT)`);
-			case null:
-				githubAction.core.info(`External variable list is empty. ([GitHub Action] Send To IFTTT)`);
-				variableSystem.list.external = {};
-				break;
-			case true:
-				if (advancedDetermine.isStringifyJSON(variableSystem.list.external) === false) {
-					throw new TypeError(`Argument "variable_list_external" must be type of object JSON! ([GitHub Action] Send To IFTTT)`);
-				};
-				variableSystem.list.external = JSON.parse(variableSystem.list.external);
-				break;
-			default:
-				throw new Error();
-		};
+			};
+			variableSystem.list.external = JSON.parse(variableSystem.list.external);
+			break;
+		case false:
+		default:
+			throw new TypeError(`Argument "variable_list_external" must be type of object JSON! ([GitHub Action] Send To IFTTT)`);
 	};
 	githubAction.core.info(`Tokenize variable list. ([GitHub Action] Send To IFTTT)`);
 	variableSystem.list.external = jsonFlatten(
@@ -126,7 +123,7 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 			headers: {
 				"Content-Type": "application/json",
 				"Content-Length": requestPayload.length,
-				"User-Agent": `NodeJS/${process.version.replace(/^v/giu, "")} node-fetch/2.6.1 GitHubAction.SendToIFTTT(@hugoalh)/3.1.0`
+				"User-Agent": `NodeJS/${process.version.replace(/^v/giu, "")} node-fetch/2.6.1 GitHubAction.SendToIFTTT(@hugoalh)/3.1.1`
 			},
 			method: "POST",
 			redirect: "follow"
