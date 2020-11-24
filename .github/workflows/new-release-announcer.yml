@@ -9,7 +9,7 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - id: "send-to-discord-main"
-        uses: "hugoalh/GitHubAction.SendToDiscord@v3.0.2"
+        uses: "hugoalh/GitHubAction.SendToDiscord@v3.1.0"
         with:
           configuration: ".github/workflows_configuration/new-release-announcer-send-to-discord.yml"
           webhook_id: "${{secrets.DISCORDWEBHOOK_HUGOALHSTUDIO_STUDIOANNOUNCEMENT_NEWRELEASEANNOUNCER_ID}}"
