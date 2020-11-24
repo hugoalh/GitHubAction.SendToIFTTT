@@ -85,11 +85,11 @@ To use variable in the supported argument, follow the pattern:
 
 #### `webhook_eventname`
 
-**\[V\]** `<string>` IFTTT webhook event name, create from applet "Receive A Web Request - Event Name"; recommended to keep in lower case to prevent issue.
+**\[V\]** `<string>` IFTTT webhook event name, create from applet "Receive A Web Request - Event Name"; Recommended to keep in lower case to prevent issue.
 
 #### `webhook_key`
 
-`<string.secret>` IFTTT webhook key. To obtain it, click "Menu" > "My Services" > "Webhooks" > "Settings", your key is at "Account Info" > "URL" and after `https://maker.ifttt.com/use/`. To regenerate it, click "Edit".
+`<string.secret>` IFTTT webhook key; To obtain it, click "Menu" > "My Services" > "Webhooks" > "Settings", your key is at "Account Info" > "URL" and after `https://maker.ifttt.com/use/`; To regenerate it, click "Edit".
 
 <img align="center" src="https://i.imgur.com/ihnqN5B.png" width="384px"/>
 
@@ -99,7 +99,7 @@ To use variable in the supported argument, follow the pattern:
 
 #### `variable_list_external`
 
-**\[Optional\]** `<object.json>` External variable list that will use in the data. Can import from other actions' output.
+**\[Optional\]** `<object.json>` External variable list that will use in the data; Can import from other actions' output.
 
 #### `variable_prefix`
 
