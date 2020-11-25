@@ -37,19 +37,19 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 	if (advancedDetermine.isStringSingleLine(variableSystem.suffix, { allowWhitespace: false }) !== true) {
 		throw new TypeError(`Argument "variable_suffix" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 	};
-	if (advancedDetermine.isStringSingleLine(webhook.eventName, { allowWhitespace: false }) !== true) {
+	if (advancedDetermine.isStringSingleLine(webhook.eventName) !== true) {
 		throw new TypeError(`Argument "webhook_eventname" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 	};
-	if (webhook.eventName.search(/\//gu) !== -1) {
+	if (webhook.eventName.search(/[/\s]/gu) !== -1) {
 		throw new SyntaxError(`Argument "webhook_eventname"'s value is not match the require pattern! ([GitHub Action] Send To IFTTT)`);
 	};
 	if (advancedDetermine.isStringLowerCase(webhook.eventName) !== true) {
 		githubAction.core.warning(`Argument "webhook_eventname" is recommended to keep in lower case to prevent issue! ([GitHub Action] Send To IFTTT)`);
 	};
-	if (advancedDetermine.isStringSingleLine(webhook.key, { allowWhitespace: false }) !== true) {
+	if (advancedDetermine.isStringSingleLine(webhook.key) !== true) {
 		throw new TypeError(`Argument "webhook_key" must be type of string (non-nullable)! ([GitHub Action] Send To IFTTT)`);
 	};
-	if (webhook.key.search(/\//gu) !== -1) {
+	if (webhook.key.search(/[/\s]/gu) !== -1) {
 		throw new SyntaxError(`Argument "webhook_key"'s value is not match the require pattern! ([GitHub Action] Send To IFTTT)`);
 	};
 	githubAction.core.info(`Import variable list. ([GitHub Action] Send To IFTTT)`);
@@ -123,7 +123,7 @@ const advancedDetermine = require("@hugoalh/advanced-determine"),
 			headers: {
 				"Content-Type": "application/json",
 				"Content-Length": requestPayload.length,
-				"User-Agent": `NodeJS/${process.version.replace(/^v/giu, "")} node-fetch/2.6.1 GitHubAction.SendToIFTTT(@hugoalh)/3.1.1`
+				"User-Agent": `NodeJS/${process.version.replace(/^v/giu, "")} node-fetch/2.6.1 GitHubAction.SendToIFTTT(@hugoalh)/3.1.2`
 			},
 			method: "POST",
 			redirect: "follow"
