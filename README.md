@@ -99,7 +99,7 @@ To use variable in the supported argument, follow the pattern:
 
 #### `variable_list_external`
 
-**\[Optional\]** `<object.json>` External variable list that will use in the data; Can import from other actions' output.
+**\[Optional\]** `<object.json>` External variable list that will use in the data; Can import from other action's output.
 
 #### `variable_prefix`
 
