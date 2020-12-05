@@ -29,7 +29,7 @@ Send an email to anyone who listed in here (click the link to obtain the email a
 ### Suggested Content List
 
 - Your GitHub account username (e.g.: `@octocat`)
-- Project index (mostly start with `hugoalh/`)
+- Project index (mostly start with `hugoalh/` or `hugoalh-studio/`)
 - Affected version(s) (must be a supported version(s))
 - Affected file(s)
 - Issue(s) to cause this security issue
