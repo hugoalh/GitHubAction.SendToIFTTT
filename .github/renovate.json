@@ -1,0 +1,41 @@
+{
+	"assignAutomerge": true,
+	"assigneesFromCodeOwners": false,
+	"assigneesSampleSize": 1,
+	"automergeType": "pr",
+	"bumpVersion": null,
+	"cloneSubmodules": true,
+	"configWarningReuseIssue": false,
+	"dependencyDashboard": false,
+	"dependencyDashboardApproval": false,
+	"draftPR": false,
+	"enabled": true,
+	"fetchReleaseNotes": true,
+	"ignoreDeprecated": true,
+	"ignoreUnstable": true,
+	"includeForks": false,
+	"labels": [
+		"dependency📦",
+		"unconfirm📋"
+	],
+	"lockFileMaintenance": {
+		"enabled": true
+	},
+	"packageRules": [
+		{
+			"automerge": true,
+			"updateTypes": [
+				"patch"
+			]
+		}
+	],
+	"unicodeEmoji": true,
+	"unpublishSafe": true,
+	"updateLockFiles": true,
+	"versioning": "semver",
+	"vulnerabilityAlerts": {
+		"addLabels": [
+			"security🛡"
+		]
+	}
+}
